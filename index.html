@@ -1,213 +1,832 @@
-<div class="card">
-    <h1>Связь Java и Minecraft</h1>
-    <p>Майнкрафт работает на языке Java. Каждая новая версия игры требует более новую версию Java. Если у тебя стоит Java 8, а ты запускаешь 1.21 — всё сломается.</p>
-    <table>
-        <tr>
-            <th>Версия Майна</th>
-            <th>Версия Java</th>
-            <th>pack_format</th>
-            <th>Что нового в коде?</th>
-        </tr>
-        <tr>
-            <td><b>1.21 - 1.21.4</b></td>
-            <td>Java 21</td>
-            <td>48 - 61</td>
-            <td>Компоненты предметов вместо NBT</td>
-        </tr>
-        <tr>
-            <td><b>1.20.5 - 1.20.6</b></td>
-            <td>Java 21</td>
-            <td>41</td>
-            <td>Первое появление компонентов</td>
-        </tr>
-        <tr>
-            <td><b>1.20.1 - 1.20.4</b></td>
-            <td>Java 17</td>
-            <td>15 - 26</td>
-            <td>Старая добрая система NBT</td>
-        </tr>
-        <tr>
-            <td><b>1.18 - 1.19</b></td>
-            <td>Java 17</td>
-            <td>8 - 12</td>
-            <td>Новая высота мира (320 блоков)</td>
-        </tr>
-        <tr>
-            <td><b>1.17</b></td>
-            <td>Java 16</td>
-            <td>7</td>
-            <td>Первые шаги к 1.18</td>
-        </tr>
-        <tr>
-            <td><b>1.16.5 и ниже</b></td>
-            <td>Java 8</td>
-            <td>6 и меньше</td>
-            <td>Классический майнкрафт</td>
-        </tr>
-    </table>
-</div>
-
-<div class="card">
-    <h1>Файл pack.mcmeta (Наполнение)</h1>
-    <p>Этот файл лежит в самом корне папки. Без него папка — просто мусор. Вот как он должен выглядеть внутри:</p>
-    <div class="code">
-{
-  "pack": {
-    "description": "§6Aerhold Project §7by KERDYS\n§bVersion 1.0",
-    "pack_format": 48
-  }
-}
-    </div>
-    <p><b>Разбор по фактам:</b></p>
-    <ul>
-        <li><code>§6</code> и <code>§b</code> — это цветовые коды. 6 — золото, b — голубой. Так описание в меню будет цветным!</li>
-        <li><code>\n</code> — это перенос строки.</li>
-        <li><code>pack_format</code> — это самое важное. Если ты делаешь под 1.21, ставь 48.</li>
-    </ul>
-</div>
-
-<div class="card">
-    <h1>Где писать код? (Namespace)</h1>
-    <p>В папке <code>data</code> всегда должно быть ДВЕ папки:</p>
-    <ol>
-        <li><b>minecraft</b> — здесь ты <i>перезаписываешь</i> стандартные вещи (крафты, теги).</li>
-        <li><b>aerhold</b> (твой ник/название) — здесь ты создаешь <i>свои</i> функции и биомы.</li>
-    </ol>
-    <p>Когда вызываешь команду в игре, это выглядит так: <code>/function aerhold:cool_effect</code></p>
-</div>
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>ULTIMATE DATAPACK ENCYCLOPEDIA</title>
-    <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #e0e0e0; background: #121212; margin: 0; }
-        header { background: #1f1f1f; padding: 2rem; border-bottom: 3px solid #3498db; text-align: center; }
-        nav { background: #252525; padding: 1rem; sticky; top: 0; display: flex; justify-content: center; gap: 20px; }
-        nav a { color: #3498db; text-decoration: none; font-weight: bold; }
-        .container { max-width: 1200px; margin: auto; padding: 20px; }
-        section { background: #1e1e1e; margin-bottom: 30px; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        h2 { color: #f1c40f; border-bottom: 1px solid #444; padding-bottom: 10px; }
-        code { background: #2d2d2d; color: #a6e22e; padding: 2px 6px; border-radius: 4px; font-family: 'Consolas', monospace; }
-        pre { background: #2d2d2d; padding: 15px; border-left: 5px solid #a6e22e; overflow-x: auto; color: #f8f8f2; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .warning { color: #e74c3c; font-weight: bold; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEDRYS_S — ЭНЦИКЛОПЕДИЯ ДАТАПАКОВ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Share+Tech+Mono&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #0f1218;
+    --surface2: #141820;
+    --border: #1e2535;
+    --accent: #4da8da;
+    --gold: #c9a84c;
+    --rune: #7ecfb3;
+    --red: #e05a5a;
+    --text: #c8cdd8;
+    --text-dim: #6b7280;
+    --code-bg: #0d1117;
+    --code-text: #79d1a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════════════════
+     АНИМИРОВАННЫЙ ФОН
+  ═══════════════════════════════════════════ */
+  #canvas-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ═══════════════════════════════════════════
+     HEADER
+  ═══════════════════════════════════════════ */
+  header {
+    text-align: center;
+    padding: 80px 20px 60px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header-runes {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--border);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: fadeSlideDown 1s ease both;
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(28px, 5vw, 64px);
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeSlideDown 1s 0.1s ease both;
+    text-shadow: 0 0 60px rgba(201,168,76,0.25);
+  }
+
+  header h1 span {
+    color: var(--accent);
+  }
+
+  .header-sub {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--text-dim);
+    margin-top: 16px;
+    animation: fadeSlideDown 1s 0.2s ease both;
+  }
+
+  .header-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+    animation: fadeSlideDown 1s 0.3s ease both;
+  }
+
+  .header-divider::before, .header-divider::after {
+    content: '';
+    flex: 1;
+    max-width: 200px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .header-divider::after {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .rune-symbol {
+    font-size: 24px;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  /* ═══════════════════════════════════════════
+     НАВИГАЦИЯ
+  ═══════════════════════════════════════════ */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,12,16,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+  }
+
+  .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+
+  nav a {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 16px 18px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s, border-bottom-color 0.2s;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+
+  nav a:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  /* ═══════════════════════════════════════════
+     LAYOUT
+  ═══════════════════════════════════════════ */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  /* ═══════════════════════════════════════════
+     CHAPTER HEADERS
+  ═══════════════════════════════════════════ */
+  .chapter-header {
+    padding: 60px 0 20px;
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .chapter-header:first-child { border-top: none; margin-top: 40px; }
+
+  .chapter-num {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    min-width: 80px;
+  }
+
+  .chapter-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .chapter-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTIONS & CARDS
+  ═══════════════════════════════════════════ */
+  section {
+    margin-bottom: 8px;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 32px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s;
+    position: relative;
+  }
+
+  .card:hover { border-color: #2a3347; }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-gold::before { background: linear-gradient(180deg, var(--gold), transparent); }
+  .card-rune::before { background: linear-gradient(180deg, var(--rune), transparent); }
+  .card-red::before { background: linear-gradient(180deg, var(--red), transparent); }
+
+  /* ═══════════════════════════════════════════
+     TYPOGRAPHY
+  ═══════════════════════════════════════════ */
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--rune);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 20px 0 10px;
+  }
+
+  p { color: var(--text); margin-bottom: 12px; }
+
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: #e0e4ec; font-weight: 600; }
+
+  em { color: var(--gold); font-style: italic; }
+
+  /* ═══════════════════════════════════════════
+     CODE
+  ═══════════════════════════════════════════ */
+  code {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    background: var(--code-bg);
+    color: var(--rune);
+    padding: 2px 7px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+  }
+
+  pre {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    background: var(--code-bg);
+    color: #e2e8f0;
+    padding: 20px 24px;
+    border-left: 3px solid var(--rune);
+    border-radius: 0 2px 2px 0;
+    overflow-x: auto;
+    line-height: 1.7;
+    margin: 16px 0;
+    white-space: pre;
+  }
+
+  pre .comment { color: #4b5563; }
+  pre .keyword { color: var(--accent); }
+  pre .string { color: var(--gold); }
+
+  /* ═══════════════════════════════════════════
+     GRID
+  ═══════════════════════════════════════════ */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+  /* ═══════════════════════════════════════════
+     TABLE
+  ═══════════════════════════════════════════ */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+  }
+
+  .data-table th {
+    background: var(--code-bg);
+    color: var(--gold);
+    padding: 10px 16px;
+    text-align: left;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 11px;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .data-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .data-table td:first-child { color: var(--accent); }
+
+  /* ═══════════════════════════════════════════
+     LISTS
+  ═══════════════════════════════════════════ */
+  ul, ol {
+    padding-left: 20px;
+    margin: 12px 0;
+  }
+
+  li {
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+
+  li code { font-size: 12px; }
+
+  /* ═══════════════════════════════════════════
+     CALLOUTS
+  ═══════════════════════════════════════════ */
+  .callout {
+    padding: 16px 20px;
+    border-radius: 2px;
+    margin: 16px 0;
+    border-left: 3px solid;
+    font-size: 15px;
+  }
+
+  .callout-warn {
+    background: rgba(224,90,90,0.07);
+    border-color: var(--red);
+    color: #f0a0a0;
+  }
+
+  .callout-tip {
+    background: rgba(77,168,218,0.07);
+    border-color: var(--accent);
+    color: #9dd4f0;
+  }
+
+  .callout-gold {
+    background: rgba(201,168,76,0.07);
+    border-color: var(--gold);
+    color: #e8d090;
+  }
+
+  .callout-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.7;
+  }
+
+  /* ═══════════════════════════════════════════
+     BADGE
+  ═══════════════════════════════════════════ */
+  .badge {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  .badge-new { background: rgba(126,207,179,0.15); color: var(--rune); border: 1px solid var(--rune); }
+  .badge-adv { background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid var(--gold); }
+  .badge-1_21 { background: rgba(77,168,218,0.15); color: var(--accent); border: 1px solid var(--accent); }
+
+  /* ═══════════════════════════════════════════
+     TOC SIDEBAR
+  ═══════════════════════════════════════════ */
+  .toc-box {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 24px;
+    margin: 32px 0;
+  }
+
+  .toc-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 6px;
+  }
+
+  .toc-link {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s, background 0.2s;
+    border-radius: 2px;
+  }
+
+  .toc-link:hover { color: var(--accent); background: rgba(77,168,218,0.06); }
+
+  .toc-num { color: var(--border); min-width: 24px; }
+
+  /* ═══════════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════════ */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+
+  .footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  .footer-meta {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .footer-discord {
+    display: inline-block;
+    margin-top: 16px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    background: rgba(77,168,218,0.08);
+    border: 1px solid var(--accent);
+    padding: 8px 20px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+
+  .footer-discord:hover { background: rgba(77,168,218,0.18); }
+
+  /* ═══════════════════════════════════════════
+     ANIMATIONS
+  ═══════════════════════════════════════════ */
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes runeFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.12; }
+    50%       { transform: translateY(-20px) rotate(5deg); opacity: 0.22; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ═══════════════════════════════════════════
+     SECTION-SPECIFIC
+  ═══════════════════════════════════════════ */
+  .op-table td:nth-child(2) { color: var(--rune); }
+
+  .version-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+  }
+  .v-green { background: #4ade80; }
+  .v-blue  { background: var(--accent); }
+  .v-gold  { background: var(--gold); }
+
+  /* scroll back to top */
+  #top-btn {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    z-index: 200;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    padding: 10px 14px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #top-btn.show { opacity: 1; pointer-events: all; }
+  #top-btn:hover { border-color: var(--gold); color: var(--gold); }
+</style>
 </head>
 <body>
 
+<!-- АНИМИРОВАННЫЙ ФОН -->
+<canvas id="canvas-bg"></canvas>
+<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+
+<div class="page-wrap">
+
+<!-- ═══════════ HEADER ═══════════ -->
 <header>
-    <h1>КЕРДИС: ГИПЕР-ЭНЦИКЛОПЕДИЯ ДАТАПАКОВ</h1>
-    <p>Полное руководство по техническому моддингу Minecraft (Java Edition)</p>
+  <div class="header-runes">ᚠᚢᚦᚨᚱᚲ — KERDYS — ᚠᚢᚦᚨᚱᚲ</div>
+  <h1>KEDRYS_<br><span>ЭНЦИКЛОПЕДИЯ ДАТАПАКОВ</span></h1>
+  <p class="header-sub">Полное техническое руководство по моддингу Minecraft Java Edition</p>
+  <div class="header-divider"><span class="rune-symbol">ᛟ</span></div>
 </header>
 
+<!-- ═══════════ NAV ═══════════ -->
 <nav>
-    <a href="#structure">Структура</a>
-    <a href="#generation">Генерация мира</a>
-    <a href="#logic">Функции и Теги</a>
-    <a href="#modding">Конвертация в MOD</a>
+  <div class="nav-inner">
+    <a href="#sec-basics">Основы</a>
+    <a href="#sec-structure">Структура</a>
+    <a href="#sec-worldgen">Генерация мира</a>
+    <a href="#sec-functions">Функции и логика</a>
+    <a href="#sec-entities">Сущности</a>
+    <a href="#sec-combat">Боевая система</a>
+    <a href="#sec-data">Данные и БД</a>
+    <a href="#sec-atmosphere">Атмосфера</a>
+    <a href="#sec-jar">JAR / Мод</a>
+    <a href="#sec-advanced">Продвинутое</a>
+  </div>
 </nav>
 
 <div class="container">
 
-    <section id="structure">
-        <h2>1. Анатомия Датапака</h2>
-        <p>Датапак — это ZIP-архив или папка, которая переопределяет логику игры без изменения кода движка.</p>
-        <pre>
-my_datapack/
-├── pack.mcmeta (Манифест)
-└── data/
-    ├── minecraft/ (Переопределение ванилы)
-    └── my_namespace/ (Твой контент)
-        ├── functions/ (.mcfunction файлы)
-        ├── worldgen/ (Биомы, шум, структуры)
-        ├── recipes/ (Крафты)
-        └── advancements/ (Ачивки)
-        </pre>
-        <p><strong>pack.mcmeta:</strong> Критически важный файл. Для версии 1.20.x <code>pack_format</code> должен быть 15, для 1.21 — 48.</p>
-    </section>
+  <!-- ═══════════ ОГЛАВЛЕНИЕ ═══════════ -->
+  <div class="toc-box fade-in">
+    <div class="toc-title">ᛏ Содержание</div>
+    <div class="toc-grid">
+      <a class="toc-link" href="#sec-basics"><span class="toc-num">I</span> Основы: Java и pack.mcmeta</a>
+      <a class="toc-link" href="#sec-structure"><span class="toc-num">II</span> Структура датапака</a>
+      <a class="toc-link" href="#sec-namespace"><span class="toc-num">III</span> Namespace и пространства имён</a>
+      <a class="toc-link" href="#sec-worldgen"><span class="toc-num">IV</span> Генерация мира (Worldgen)</a>
+      <a class="toc-link" href="#sec-noise"><span class="toc-num">V</span> Noise Router и Density Functions</a>
+      <a class="toc-link" href="#sec-splines"><span class="toc-num">VI</span> Splines: фильтрация рельефа</a>
+      <a class="toc-link" href="#sec-dimensions"><span class="toc-num">VII</span> Измерения: Нифльхейм</a>
+      <a class="toc-link" href="#sec-biomes"><span class="toc-num">VIII</span> Биомы и структуры</a>
+      <a class="toc-link" href="#sec-functions"><span class="toc-num">IX</span> Функции и execute</a>
+      <a class="toc-link" href="#sec-scoreboard"><span class="toc-num">X</span> Scoreboard: кулдауны и мана</a>
+      <a class="toc-link" href="#sec-storage"><span class="toc-num">XI</span> Command Storage</a>
+      <a class="toc-link" href="#sec-predicates"><span class="toc-num">XII</span> Predicates и условия</a>
+      <a class="toc-link" href="#sec-raycasting"><span class="toc-num">XIII</span> Raycasting: лучи</a>
+      <a class="toc-link" href="#sec-entities"><span class="toc-num">XIV</span> Item Display и Interaction</a>
+      <a class="toc-link" href="#sec-animations"><span class="toc-num">XV</span> Анимация и кватернионы</a>
+      <a class="toc-link" href="#sec-ai"><span class="toc-num">XVI</span> ИИ мобов и патруль</a>
+      <a class="toc-link" href="#sec-combat"><span class="toc-num">XVII</span> Кастомный урон и чары</a>
+      <a class="toc-link" href="#sec-boss"><span class="toc-num">XVIII</span> Система боссов</a>
+      <a class="toc-link" href="#sec-loot"><span class="toc-num">XIX</span> Loot Tables и атрибуты</a>
+      <a class="toc-link" href="#sec-data"><span class="toc-num">XX</span> Валюта и репутация</a>
+      <a class="toc-link" href="#sec-atmosphere"><span class="toc-num">XXI</span> Частицы и погода</a>
+      <a class="toc-link" href="#sec-sounds"><span class="toc-num">XXII</span> Звуковой ландшафт</a>
+      <a class="toc-link" href="#sec-gui"><span class="toc-num">XXIII</span> Кастомный GUI и шрифты</a>
+      <a class="toc-link" href="#sec-protection"><span class="toc-num">XXIV</span> Приват зон и защита</a>
+      <a class="toc-link" href="#sec-jar"><span class="toc-num">XXV</span> Конвертация в JAR / Fabric</a>
+      <a class="toc-link" href="#sec-advanced"><span class="toc-num">XXVI</span> Оптимизация и автоматизация</a>
+    </div>
+  </div>
 
-    <section id="generation">
-        <h2>2. Deep Worldgen: Фильтрация и Шум</h2>
-        <p>Самая сложная часть. Генерация строится на <strong>Density Functions</strong> (функциях плотности).</p>
-        <div class="grid">
-            <div>
-                <h3>Density Functions</h3>
-                <p>Это математические формулы, определяющие форму гор, пещер и равнин. Основные типы:</p>
-                <ul>
-                    <li><code>minecraft:noise</code> — базовый шум (Perlin/Simplex).</li>
-                    <li><code>minecraft:shifted_noise</code> — шум со смещением (создает извилистые реки).</li>
-                    <li><code>minecraft:weird_scaled_sampler</code> — используется для хребтов гор.</li>
-                </ul>
-            </div>
-            <div>
-                <h3>Noise Settings</h3>
-                <pre>
-{
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ I — ОСНОВЫ
+  ════════════════════════════════════════ -->
+  <div id="sec-basics" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел I</span>
+    <span class="chapter-title">Основы: Java, версии и pack.mcmeta</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Связь Java и Minecraft</h2>
+    <p>Майнкрафт написан на Java. Каждая крупная версия игры требует определённую версию JDK. Если запускать 1.21 с Java 8 — ничего не запустится.</p>
+    <table class="data-table">
+      <tr>
+        <th>Версия</th>
+        <th>Java</th>
+        <th>pack_format</th>
+        <th>Что изменилось</th>
+      </tr>
+      <tr><td>1.21 – 1.21.4</td><td>Java 21</td><td>48 – 61</td><td>Компоненты предметов вместо NBT</td></tr>
+      <tr><td>1.20.5 – 1.20.6</td><td>Java 21</td><td>41</td><td>Первое появление компонентов</td></tr>
+      <tr><td>1.20.1 – 1.20.4</td><td>Java 17</td><td>15 – 26</td><td>Классическая система NBT</td></tr>
+      <tr><td>1.18 – 1.19</td><td>Java 17</td><td>8 – 12</td><td>Новая высота мира (320 блоков)</td></tr>
+      <tr><td>1.17</td><td>Java 16</td><td>7</td><td>Переход к 1.18, пещеры</td></tr>
+      <tr><td>1.16.5 и ниже</td><td>Java 8</td><td>6 и меньше</td><td>Классический Minecraft</td></tr>
+    </table>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Файл pack.mcmeta</h2>
+    <p>Лежит в корне датапака. Без него папка — просто набор файлов, игра её не увидит.</p>
+    <pre>{
+  "pack": {
+    "description": "§6Aerhold Project §7by KERDYS\n§bVersion 1.0",
+    "pack_format": 48
+  }
+}</pre>
+    <div class="callout callout-tip">
+      <div class="callout-label">Подсказка</div>
+      <code>§6</code> — золото, <code>§b</code> — голубой, <code>§c</code> — красный. <code>\n</code> — перенос строки. Описание в меню выбора датапаков будет цветным!
+    </div>
+    <div class="grid-2">
+      <div>
+        <h3>Цветовые коды §</h3>
+        <ul>
+          <li><code>§0</code> — чёрный</li>
+          <li><code>§6</code> — золотой</li>
+          <li><code>§b</code> — голубой</li>
+          <li><code>§c</code> — красный</li>
+          <li><code>§e</code> — жёлтый</li>
+          <li><code>§f</code> — белый</li>
+          <li><code>§l</code> — жирный</li>
+          <li><code>§o</code> — курсив</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Поддерживаемые форматы датапака</h3>
+        <p>Начиная с 1.20.2 можно задать диапазон совместимых версий через <code>supported_formats</code>, чтобы датапак работал на нескольких версиях сразу:</p>
+        <pre>{
+  "pack": {
+    "pack_format": 48,
+    "supported_formats": [48, 61]
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ II — СТРУКТУРА
+  ════════════════════════════════════════ -->
+  <div id="sec-structure" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел II</span>
+    <span class="chapter-title">Анатомия и структура датапака</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Файловое дерево</h2>
+    <p>Датапак — это ZIP-архив или обычная папка. Игра читает их одинаково. Вот полная структура профессионального датапака:</p>
+    <pre>my_datapack/
+├── pack.mcmeta          <span class="comment">← обязательный манифест</span>
+├── pack.png             <span class="comment">← иконка (64×64 PNG)</span>
+└── data/
+    ├── minecraft/       <span class="comment">← переопределение ванильного контента</span>
+    │   ├── tags/
+    │   │   ├── functions/
+    │   │   │   ├── tick.json     <span class="comment">← каждый тик</span>
+    │   │   │   └── load.json     <span class="comment">← при загрузке</span>
+    │   │   └── worldgen/biome/
+    │   └── recipes/
+    └── aerhold/         <span class="comment">← твой namespace</span>
+        ├── functions/   <span class="comment">← .mcfunction файлы</span>
+        ├── worldgen/
+        │   ├── biome/
+        │   ├── dimension/
+        │   ├── dimension_type/
+        │   ├── noise_settings/
+        │   ├── density_function/
+        │   └── placed_feature/
+        ├── recipes/
+        ├── advancements/
+        ├── loot_tables/
+        ├── predicates/
+        ├── damage_type/
+        ├── enchantment/ <span class="comment">← 1.21+</span>
+        └── structures/</pre>
+  </div>
+
+  <div id="sec-namespace" class="card card-rune fade-in">
+    <h2>Namespace: правило двух папок</h2>
+    <p>В папке <code>data</code> всегда должно быть минимум ДВЕ папки:</p>
+    <div class="grid-2">
+      <div>
+        <h3>minecraft/</h3>
+        <p>Здесь ты <strong>переопределяешь</strong> ванильные вещи: рецепты, теги биомов, функции tick/load. Файлы с тем же именем заменят оригиналы.</p>
+      </div>
+      <div>
+        <h3>aerhold/ (твой namespace)</h3>
+        <p>Здесь ты <strong>создаёшь своё</strong>: функции, биомы, структуры, рецепты. Вызов: <code>/function aerhold:cool_effect</code></p>
+      </div>
+    </div>
+    <div class="callout callout-warn">
+      <div class="callout-label">Важно</div>
+      Namespace пишется строчными латинскими буквами, только <code>a–z</code>, <code>0–9</code>, <code>_</code> и <code>-</code>. Пробелы и CamelCase — нельзя.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ III — ГЕНЕРАЦИЯ МИРА
+  ════════════════════════════════════════ -->
+  <div id="sec-worldgen" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел III</span>
+    <span class="chapter-title">Генерация мира</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Noise Settings: основа рельефа</h2>
+    <p>Самый главный файл генерации. Он задаёт физические параметры мира и входную точку для всех функций плотности.</p>
+    <pre>{
+  "sea_level": 63,
+  "disable_mob_generation": false,
+  "aquifers_enabled": true,
+  "ore_veins_enabled": true,
   "noise": {
     "min_y": -64,
     "height": 384,
     "size_horizontal": 1,
     "size_vertical": 2
   },
-  "surface_rule": { ... }
-}
-                </pre>
-            </div>
-        </div>
-        <p><strong>Принцип "Шум -> Рельеф":</strong> Игра берет значения из <code>noise_settings</code>, прогоняет через функции плотности и накладывает <code>surface_rules</code> (блоки травы, камня, песка в зависимости от высоты и биома).</p>
-    </section>
+  "noise_router": { <span class="comment">/* ... см. раздел V */</span> },
+  "surface_rule": { <span class="comment">/* ... блоки на поверхности */</span> },
+  "spawn_target": []
+}</pre>
+  </div>
 
-    <section id="logic">
-        <h2>3. Энциклопедия Функций</h2>
+  <div id="sec-noise" class="card fade-in">
+    <h2>Noise Router и Density Functions <span class="badge badge-adv">Advanced</span></h2>
+    <p>В версиях 1.19+ рельеф строится на каскаде функций плотности. <strong>Noise Router</strong> — это «карта маршрутов», которая связывает математические функции с конкретными аспектами генерации:</p>
+    <div class="grid-2">
+      <div>
+        <h3>Ключевые узлы роутера</h3>
         <ul>
-            <li><strong>Loot Tables:</strong> Контроль дропа. Можно сделать, чтобы из палки выпадал алмаз с шансом 0.01%.</li>
-            <li><strong>Predicates:</strong> Условия. "Если игрок в воде И на нем шлем И сейчас ночь".</li>
-            <li><strong>Damage Types:</strong> Создание своих видов урона (например, "магия пустоты").</li>
-            <li><strong>Trim Materials:</strong> Добавление новых узоров для брони.</li>
+          <li><code>barrier</code> — граница твёрдого блока</li>
+          <li><code>fluid_level_flooded</code> — уровень воды в пещерах</li>
+          <li><code>vein_toggle</code> — переключатель рудных жил</li>
+          <li><code>continents</code> — глобальный шум суши/океана</li>
+          <li><code>erosion</code> — эрозия: плоские/горные зоны</li>
+          <li><code>ridges</code> — хребты и пики</li>
+          <li><code>initial_density_without_jaggedness</code> — базовая форма рельефа</li>
+          <li><code>final_density</code> — финальная плотность блоков</li>
         </ul>
-    </section>
-
-    <section id="modding">
-        <h2>4. Трансформация: Datapack -> .JAR (Fabric/NeoForge)</h2>
-        <p>Чтобы превратить датапак в полноценный мод, нужно использовать обертку. Самый быстрый способ — создать простой Fabric-мод.</p>
-        <ol>
-            <li>Скачай шаблон мода (Fabric Example Mod).</li>
-            <li>Помести папку <code>data</code> из датапака в <code>src/main/resources/</code> твоего проекта.</li>
-            <li>В <code>fabric.mod.json</code> укажи ID твоего датапака как ID мода.</li>
-            <li>Скомпилируй через Gradle: <code>./gradlew build</code>.</li>
-        </ol>
-        <p class="warning">Важно: JAR-мод позволяет загружать датапак автоматически при создании любого мира, что удобно для серверных сборок.</p>
-    </section>
-
-</div>
-
-<footer>
-    <p style="text-align: center; padding: 20px; color: #777;">&copy; 2026 Сгенерировано для разработки проекта Aerhold</p>
-</footer>
-
-</body>
-</html>
-
-<section id="noise-deep">
-    <h2>5. Архитектура Шума: Noise Router и Density Functions</h2>
-    <p>В современных версиях Minecraft (1.19+) рельеф — это не просто рандом, а каскад функций. Вот как это работает на уровне "сотен строк JSON":</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Основные узлы Noise Router:</h3>
-            <ul>
-                <li><code>barrier</code>: Определяет, где кончается твердый блок.</li>
-                <li><code>fluid_level_flooded</code>: Управляет заполнением пещер водой.</li>
-                <li><code>vein_toggle</code>: Переключатель для генерации рудных жил.</li>
-                <li><code>continents</code>: Глобальный шум для разделения суши и океана.</li>
-            </ul>
-        </div>
-        <div>
-            <h3>Пример сложной функции (Density Function):</h3>
-            <pre>
-{
+      </div>
+      <div>
+        <h3>Типы Density Functions</h3>
+        <ul>
+          <li><code>minecraft:noise</code> — базовый шум (Perlin/Simplex)</li>
+          <li><code>minecraft:shifted_noise</code> — шум со смещением (реки)</li>
+          <li><code>minecraft:weird_scaled_sampler</code> — хребты гор</li>
+          <li><code>minecraft:interpolated</code> — трилинейная интерполяция</li>
+          <li><code>minecraft:blend_density</code> — смешивание при загрузке старых чанков</li>
+          <li><code>minecraft:add</code>, <code>minecraft:mul</code> — математика</li>
+          <li><code>minecraft:min</code>, <code>minecraft:max</code> — фильтрация</li>
+          <li><code>minecraft:spline</code> — кривые Безье для рельефа</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Пример составной функции плотности</h3>
+    <pre>{
   "type": "minecraft:interpolated",
   "argument": {
     "type": "minecraft:shifted_noise",
@@ -218,364 +837,33 @@ my_datapack/
     "shift_y": 0,
     "shift_z": "minecraft:island_noise"
   }
-}
-            </pre>
-        </div>
-    </div>
+}</pre>
+  </div>
 
-    <h3>Фильтрация рельефа (Splines)</h3>
-    <p>Чтобы "шум шел к рельефу", используются <strong>Cubic Splines</strong>. Это графики, которые говорят игре: 
-    <em>"Если высота (terrain_estimator) равна 0.5, то сделай гору острой, а если -0.2 — преврати в каньон"</em>.</p>
-    
-    <pre>
-"points": [
+  <div id="sec-splines" class="card card-rune fade-in">
+    <h2>Splines: кривые фильтрации рельефа</h2>
+    <p>Splines — это графики перевода «значения шума» в «высоту горы». Именно они делают Minecraft горы горами, а не просто случайными холмами.</p>
+    <div class="callout callout-gold">
+      <div class="callout-label">Принцип работы</div>
+      Если <code>terrain_estimator = 0.5</code> — сделать гору острой. Если <code>-0.2</code> — превратить в каньон. Кривая задаёт эту зависимость.
+    </div>
+    <pre>"points": [
   { "location": -1.0, "value": 0.1, "derivative": 0.0 },
-  { "location": 0.0, "value": 0.5, "derivative": 1.0 },
-  { "location": 1.0, "value": 1.2, "derivative": 0.0 }
-]
-    </pre>
-</section>
+  { "location": -0.5, "value": 0.2, "derivative": 0.5 },
+  { "location":  0.0, "value": 0.5, "derivative": 1.2 },
+  { "location":  0.5, "value": 0.9, "derivative": 0.8 },
+  { "location":  1.0, "value": 1.2, "derivative": 0.0 }
+]</pre>
+    <p><code>derivative</code> — это «скорость изменения» в данной точке. Высокое значение = крутой склон.</p>
+  </div>
 
-<section id="jar-structure">
-    <h2>6. Конвертация в JAR: Манифесты и Ресурсы</h2>
-    <p>Для создания мода из датапака тебе понадобится структура <code>Fabric</code> или <code>NeoForge</code>. Главное отличие — наличие папки <code>assets</code> (текстуры) и файла <code>fabric.mod.json</code>.</p>
-    
-    <h3>Пример fabric.mod.json:</h3>
-    <pre>
-{
-  "schemaVersion": 1,
-  "id": "aerhold_core",
-  "version": "1.0.0",
-  "name": "Aerhold Project",
-  "description": "Scandic Mythology Datapack-Mod",
-  "authors": ["KERDYS"],
-  "contact": { "sources": "https://github.com/yourlink" },
-  "license": "MIT",
-  "icon": "assets/aerhold/icon.png",
-  "environment": "*",
-  "entrypoints": { "main": [] },
-  "depends": { "fabricloader": ">=0.14.x", "minecraft": "~1.20.1" }
-}
-    </pre>
-</section>
-
-<section id="raycasting">
-    <h2>7. Система Raycasting (Лучи и Взаимодействие)</h2>
-    <p>Чтобы создать "магический посох" или "скандинавское копье", которое летит точно в цель, тебе нужно запускать цикличную функцию, которая летит вперед, пока не встретит блок или сущность.</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Алгоритм работы луча:</h3>
-            <ol>
-                <li>Вызов функции от лица игрока.</li>
-                <li>Телепортация невидимого маркера на 0.1 блока вперед.</li>
-                <li>Проверка: <code>if block ^ ^ ^ air</code> — продолжаем путь.</li>
-                <li>Проверка: <code>if entity @e[distance=..1]</code> — наносим урон.</li>
-            </ol>
-        </div>
-        <div>
-            <h3>Пример кода (ray.mcfunction):</h3>
-            <pre>
-# Рекурсивный вызов для имитации скорости света
-execute if block ~ ~ ~ air run tp @s ^ ^ ^0.5
-execute as @s at @s if entity @e[type=!player,distance=..1.5] run function my:damage_logic
-execute as @s at @s if block ~ ~ ~ air run function my:ray
-            </pre>
-        </div>
-    </div>
-</section>
-
-<section id="storage">
-    <h2>8. Хранение данных: Command Storage</h2>
-    <p>В отличие от Scoreboard, <strong>Storage</strong> позволяет хранить целые JSON-массивы, списки и сложные объекты, которые не пропадают после перезахода. Это фундамент для систем прокачки (RPG-составляющая).</p>
-    
-    <pre>
-# Запись данных в глобальное хранилище
-data modify storage aerhold:players CurrentQuest set value {id:"kill_frost_giant", progress:0, reward:"iron_ingot"}
-
-# Чтение данных для проверки
-execute if data storage aerhold:players {CurrentQuest:{id:"kill_frost_giant"}} run say Квест активен!
-    </pre>
-</section>
-
-<section id="biome-logic">
-    <h2>9. Фильтрация и размещение структур</h2>
-    <p>Чтобы твои скандинавские постройки (например, драккары или алтари) не спавнились в пустыне, используется система <strong>Structure Sets</strong> и <strong>Biomes Tags</strong>.</p>
-    
-    <ul>
-        <li><code>data/minecraft/tags/worldgen/biome/has_structure/altar.json</code> — здесь ты прописываешь список ID биомов (например, <code>#minecraft:is_taiga</code>), где разрешен спавн.</li>
-        <li><strong>Placement:</strong> Используй <code>linear_separation</code> для того, чтобы структуры не кучковались в одном месте.</li>
-    </ul>
-    
-    <pre>
-{
-  "structures": "aerhold:viking_village",
-  "placement": {
-    "type": "minecraft:random_spread",
-    "spacing": 32,
-    "separation": 8,
-    "salt": 12345678
-  }
-}
-    </pre>
-</section>
-
-<section id="custom-mobs">
-    <h2>10. Продвинутые сущности: Item Display & Interaction</h2>
-    <p>Забудь про невидимых стоек для брони. Современный стандарт — это <strong>Item Display</strong> для визуала и <strong>Interaction</strong> для регистрации ударов и кликов.</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Визуализация (Item Display):</h3>
-            <p>Позволяет рендерить любой предмет (или модель из ресурспака) с любым поворотом, размером и интерполяцией движения.</p>
-            <pre>
-# Спавн кастомного моба (визуал)
-summon item_display ~ ~ ~ {
-  item:{id:"minecraft:netherite_axe",Count:1,tag:{CustomModelData:1001}},
-  transformation:{left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f],translation:[0f,0.5f,0f],scale:[2f,2f,2f]},
-  interpolation_duration:10,
-  Tags:["aerhold_mob","visual"]
-}
-            </pre>
-        </div>
-        <div>
-            <h3>Хитбокс (Interaction):</h3>
-            <p>Создает зону, по которой можно бить. Она передает ID атакующего в NBT <code>attack</code> или <code>interaction</code>.</p>
-            <pre>
-# Хитбокс для моба
-summon interaction ~ ~ ~ {
-  width:1.5,
-  height:3,
-  Tags:["aerhold_mob","hitbox"]
-}
-            </pre>
-        </div>
-    </div>
-</section>
-
-<section id="shaders">
-    <h2>11. Эффекты погружения (Post-Processing)</h2>
-    <p>Для "скандинавской" атмосферы (туман, холод, кровь на экране) можно использовать <code>vines</code> и <code>spyglass</code> эффекты, переписанные в ресурспаке внутри твоего JAR.</p>
-    
-    <h3>Триггер эффекта через JSON:</h3>
-    <pre>
-{
-  "condition": "minecraft:entity_properties",
-  "entity": "this",
-  "predicate": {
-    "location": { "biome": "minecraft:frozen_ocean" }
-  }
-}
-    </pre>
-    <p>Это позволяет автоматически накладывать цветокоррекцию (Core Shaders), когда игрок заходит в ледяные биомы Aerhold.</p>
-</section>
-
-<section id="quests">
-    <h2>12. Предикаты: Логические фильтры условий</h2>
-    <p>Предикаты — это "умные" проверки, которые работают быстрее, чем <code>execute</code> в циклах.</p>
-    
-    <pre>
-# data/aerhold/predicates/is_holding_mjolnir.json
-{
-  "condition": "minecraft:entity_properties",
-  "entity": "this",
-  "predicate": {
-    "equipment": {
-      "mainhand": {
-        "items": ["minecraft:netherite_hammer"],
-        "nbt": "{aerhold_type:'mjolnir'}"
-      }
-    }
-  }
-}
-    </pre>
-</section>
-
-<section id="damage-types">
-    <h2>13. Кастомные типы урона: Damage Types</h2>
-    <p>В версии 1.20+ мы можем создавать свои причины смерти. Например, <code>aerhold:frostbite</code> (обморожение). Это позволяет игнорировать броню или вызывать особые сообщения о смерти.</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Файл типа урона (JSON):</h3>
-            <pre>
-# data/aerhold/damage_type/frost.json
-{
-  "exhaustion": 0.1,
-  "message_id": "frostbite",
-  "scaling": "when_enchanted",
-  "effects": "freezing"
-}
-            </pre>
-        </div>
-        <div>
-            <h3>Применение в коде:</h3>
-            <pre>
-# Нанести 5 единиц урона морозом
-damage @s 5 aerhold:frost by @e[type=zombie,limit=1]
-            </pre>
-        </div>
-    </div>
-</section>
-
-<section id="loot-tables">
-    <h2>14. Loot Tables: Рандомные статы и атрибуты</h2>
-    <p>Чтобы с боссов падали мечи с разным уроном, используй функцию <code>set_attributes</code> внутри лут-таблицы. Это создаст "сотни тысяч" комбинаций оружия без ручного прописывания каждого меча.</p>
-    
-    <pre>
-{
-  "type": "minecraft:item",
-  "name": "minecraft:netherite_sword",
-  "functions": [
-    {
-      "function": "minecraft:set_attributes",
-      "modifiers": [
-        {
-          "attribute": "minecraft:generic.attack_damage",
-          "name": "Random Might",
-          "amount": { "min": 5.0, "max": 12.0 },
-          "operation": "addition",
-          "slot": "mainhand"
-        }
-      ]
-    },
-    {
-      "function": "minecraft:set_name",
-      "name": { "text": "Меч Павшего Воина", "color": "gold", "italic": true }
-    }
-  ]
-}
-    </pre>
-</section>
-
-<section id="optimization">
-    <h2>15. Оптимизация: Tick & Load Tags</h2>
-    <p>Чтобы сервер не лагал от обилия кода, критически важно разделять функции на те, что работают каждый тик, и те, что работают по событию.</p>
-    <ul>
-        <li><code>data/minecraft/tags/functions/tick.json</code> — Только самые важные проверки (Raycasting, Таймеры).</li>
-        <li><code>data/minecraft/tags/functions/load.json</code> — Инициализация Storage и Scoreboard при старте/перезагрузке.</li>
-    </ul>
-</section>
-
-<section id="gradle">
-    <h2>16. Автоматизация сборки JAR-архива</h2>
-    <p>Для профессиональной разработки используй <code>Gradle</code>. Вот пример блока сборки, который упакует твой датапак в мод:</p>
-    <pre>
-// build.gradle (фрагмент)
-jar {
-    from("src/main/resources") {
-        include "data/**"
-        include "assets/**"
-        include "fabric.mod.json"
-        include "pack.mcmeta"
-    }
-}
-    </pre>
-</section>
-
-<section id="animations">
-    <h2>17. Плавная анимация: Transformation Interpolation</h2>
-    <p>Раньше для движения моделей нужны были сотни команд <code>tp</code>, что вызывало лаги. Теперь мы используем <strong>интерполяцию</strong>. Игра сама рассчитывает плавный переход между точками.</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Код для плавного поворота:</h3>
-            <pre>
-# Начать поворот за 20 тиков (1 секунда)
-data merge entity @e[tag=viking_statue,limit=1] {
-  start_interpolation: 0,
-  interpolation_duration: 20,
-  transformation: {
-    left_rotation: [0f, 0.707f, 0f, 0.707f],
-    right_rotation: [0f, 0f, 0f, 1f],
-    translation: [0f, 0f, 0f],
-    scale: [1f, 1f, 1f]
-  }
-}
-            </pre>
-        </div>
-        <div>
-            <h3>Зачем это нужно?</h3>
-            <ul>
-                <li>Открывающиеся ворота в крепость.</li>
-                <li>Вращающиеся руны вокруг алтаря.</li>
-                <li>Плавный взлет драккара (если это магия).</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<section id="sounds">
-    <h2>18. Звуковой ландшафт: sounds.json</h2>
-    <p>Для скандинавской атмосферы нужны вопли воронов, гул ветра и боевые горны. Ты создаешь файл <code>assets/aerhold/sounds.json</code> внутри своего JAR.</p>
-    
-    <pre>
-{
-  "ambient.arctic_wind": {
-    "category": "ambient",
-    "sounds": [
-      { "name": "aerhold:ambient/wind_loop_1", "stream": true },
-      { "name": "aerhold:ambient/wind_loop_2", "stream": true }
-    ]
-  },
-  "item.horn.viking_call": {
-    "category": "player",
-    "sounds": [ "aerhold:item/horn_blast" ]
-  }
-}
-    </pre>
-    <p>Вызов в игре: <code>playsound aerhold:ambient.arctic_wind ambient @a ~ ~ ~ 1 1</code></p>
-</section>
-
-<section id="enchants">
-    <h2>19. Кастомные чары (1.21+ Enchantment Providers)</h2>
-    <p>Теперь чары — это не захардкоженные ID, а JSON-файлы. Ты можешь создать эффект "Заморозка", который срабатывает только в дождь.</p>
-    
-    <pre>
-# data/aerhold/enchantment/frost_aspect.json
-{
-  "description": {"translate": "enchantment.aerhold.frost_aspect"},
-  "supported_items": "#minecraft:enchantable/sharpness",
-  "weight": 5,
-  "max_level": 3,
-  "effects": {
-    "minecraft:post_attack": [
-      {
-        "enchanted": "attacker",
-        "affected": "victim",
-        "effect": {
-          "type": "minecraft:apply_mob_effect",
-          "to_apply": "minecraft:slowness",
-          "min_duration": 20, "max_duration": 60,
-          "min_amplifier": 1, "max_amplifier": 2
-        }
-      }
-    ]
-  }
-}
-    </pre>
-</section>
-
-<section id="scaling-logic">
-    <h2>20. Как генерировать сотни тысяч строк?</h2>
-    <p>Когда проект разрастается до масштабов <strong>Aerhold</strong>, ручной ввод JSON убивает продуктивность. Профессионалы используют <strong>Data Generators</strong>.</p>
-    <ul>
-        <li><strong>Python/Node.js:</strong> Скрипты, которые по шаблону выплевывают тысячи файлов рецептов и достижений.</li>
-        <li><strong>MCTools / Datapack Helper Plus:</strong> Плагины для VS Code, которые автозаполняют NBT-теги и пути к файлам.</li>
-        <li><strong>Macros в функциях:</strong> Использование <code>$</code> для динамической подстановки имен игроков или координат.</li>
-    </ul>
-</section>
-
-<section id="dimensions">
-    <h2>21. Измерения: Создание Нифльхейма</h2>
-    <p>Чтобы создать свой мир, тебе нужно два файла: <code>dimension_type</code> (физика: светло/темно, есть ли кровать) и <code>dimension</code> (генерация: биомы, шум).</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Настройки типа мира:</h3>
-            <pre>
-# data/aerhold/dimension_type/niflheim.json
-{
+  <div id="sec-dimensions" class="card fade-in">
+    <h2>Создание измерения: Нифльхейм <span class="badge badge-adv">Advanced</span></h2>
+    <p>Два обязательных файла: <code>dimension_type</code> (физика) и <code>dimension</code> (генератор).</p>
+    <div class="grid-2">
+      <div>
+        <h3>dimension_type/niflheim.json</h3>
+        <pre>{
   "ultrawarm": false,
   "natural": true,
   "coordinate_scale": 1.0,
@@ -589,394 +877,1313 @@ data merge entity @e[tag=viking_statue,limit=1] {
   "min_y": -64,
   "height": 384,
   "logical_height": 384
-}
-            </pre>
+}</pre>
+      </div>
+      <div>
+        <h3>Параметры на заметку</h3>
+        <ul>
+          <li><code>ultrawarm</code> — вода испаряется (как в Нижнем)</li>
+          <li><code>ambient_light</code> — фоновое освещение 0–1</li>
+          <li><code>effects</code> — небо, туман, музыка. Используй <code>minecraft:the_end</code> для лилового неба</li>
+          <li><code>has_skylight</code> — есть ли дневной цикл</li>
+          <li><code>coordinate_scale</code> — 8 для «нижнего» масштаба</li>
+        </ul>
+        <div class="callout callout-tip">
+          <div class="callout-label">Совет</div>
+          Для Нифльхейма: <code>ambient_light: 0.05</code>, <code>effects: "minecraft:the_end"</code> — получишь вечную синюю ночь.
         </div>
-        <div>
-            <h3>Генератор (Chunk Generator):</h3>
-            <p>Здесь ты указываешь свой <code>noise_router</code> (из главы 5) и биомы. Ты можешь сделать мир, состоящий только из ледяных пустошей и каньонов.</p>
-        </div>
+      </div>
     </div>
-</section>
+  </div>
 
-<section id="weather">
-    <h2>22. Динамическая погода: Снежные бури</h2>
-    <p>В Aerhold погода — это не просто декор, а угроза. Мы используем <strong>Predicates</strong> и <strong>Raycasting</strong>, чтобы проверять, находится ли игрок под открытым небом во время шторма.</p>
-    
-    <pre>
-# function aerhold:weather_tick
-execute as @a at @s if predicate aerhold:is_exposed_to_storm run function aerhold:freeze_player
+  <div id="sec-biomes" class="card card-gold fade-in">
+    <h2>Биомы: размещение структур <span class="badge badge-new">Worldgen</span></h2>
+    <p>Чтобы скандинавские постройки (драккары, алтари) не спавнились в пустыне, используются <strong>Structure Sets</strong> и <strong>Biome Tags</strong>.</p>
+    <div class="grid-2">
+      <div>
+        <h3>Биомный фильтр (тег)</h3>
+        <pre><span class="comment">/* data/minecraft/tags/worldgen/
+   biome/has_structure/altar.json */</span>
+{
+  "replace": false,
+  "values": [
+    "#minecraft:is_taiga",
+    "#minecraft:is_mountain",
+    "minecraft:snowy_plains"
+  ]
+}</pre>
+      </div>
+      <div>
+        <h3>Расположение структур</h3>
+        <pre><span class="comment">/* aerhold/worldgen/
+   structure_set/viking_villages.json */</span>
+{
+  "structures": [{
+    "structure": "aerhold:viking_village",
+    "weight": 1
+  }],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 32,
+    "separation": 8,
+    "salt": 12345678
+  }
+}</pre>
+      </div>
+    </div>
+    <p><code>spacing</code> — среднее расстояние между структурами в чанках. <code>separation</code> — минимальное. <code>salt</code> — уникальное число, чтобы разные структуры не накладывались.</p>
+  </div>
 
-# predicate: is_exposed_to_storm
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ IV — ФУНКЦИИ И ЛОГИКА
+  ════════════════════════════════════════ -->
+  <div id="sec-functions" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел IV</span>
+    <span class="chapter-title">Функции, логика и команды</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Execute: главная команда датапака</h2>
+    <p><code>execute</code> — это «переключатель контекста». Она меняет, <em>от кого</em>, <em>где</em> и <em>при каком условии</em> выполняется код.</p>
+    <table class="data-table">
+      <tr><th>Синтаксис</th><th>Что делает</th></tr>
+      <tr><td><code>execute as @e[type=zombie]</code></td><td>Запуск ОТ ЛИЦА всех зомби</td></tr>
+      <tr><td><code>execute at @s</code></td><td>Запуск В ТОЧКЕ исполнителя</td></tr>
+      <tr><td><code>execute if entity @p[distance=..5]</code></td><td>Если игрок в радиусе 5 блоков</td></tr>
+      <tr><td><code>execute anchored eyes</code></td><td>Считать от уровня глаз</td></tr>
+      <tr><td><code>execute positioned ~ ~2 ~</code></td><td>Смещение точки выполнения</td></tr>
+      <tr><td><code>execute facing entity @e[tag=target] feet</code></td><td>Повернуться к цели</td></tr>
+      <tr><td><code>execute store result score @s var</code></td><td>Сохранить результат в скорборд</td></tr>
+      <tr><td><code>execute in aerhold:niflheim</code></td><td>Выполнить в другом измерении</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-rune fade-in">
+    <h2>Выдача эффектов и предметов</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Команда effect</h3>
+        <pre><span class="comment"># Сила на 1 сек без частиц</span>
+effect give @s minecraft:strength 1 0 true
+
+<span class="comment"># Снять все эффекты</span>
+effect clear @s
+
+<span class="comment"># Эффект только если держит меч</span>
+execute as @a[nbt={SelectedItem:{
+  id:"minecraft:netherite_sword"}}]
+run effect give @s minecraft:speed 1 1 true</pre>
+      </div>
+      <div>
+        <h3>Атрибуты на предмете (1.21+)</h3>
+        <pre><span class="comment"># Шлем +2 сердца</span>
+/give @p netherite_helmet[
+  attribute_modifiers={modifiers:[{
+    type:"minecraft:generic.max_health",
+    amount:4,
+    slot:"head",
+    id:"aerhold:health_boost",
+    operation:"add_value"
+  }]}
+]</pre>
+      </div>
+    </div>
+    <div class="callout callout-tip">
+      <div class="callout-label">Чистый интерфейс</div>
+      Всегда пиши <code>true</code> в конце <code>effect give</code> — это скроет частицы зелий. Также отключай спам в консоли:<br>
+      <code>gamerule commandBlockOutput false</code><br>
+      <code>gamerule sendCommandFeedback false</code>
+    </div>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Tick & Load: сердце датапака</h2>
+    <div class="grid-2">
+      <div>
+        <h3>data/minecraft/tags/functions/tick.json</h3>
+        <pre>{
+  "values": [
+    "aerhold:tick/main"
+  ]
+}</pre>
+        <p>Функция <code>main</code> запускается КАЖДЫЙ тик (20 раз/сек). Держи её лёгкой — только диспетчер, который вызывает другие функции.</p>
+      </div>
+      <div>
+        <h3>data/minecraft/tags/functions/load.json</h3>
+        <pre>{
+  "values": [
+    "aerhold:init/load"
+  ]
+}</pre>
+        <p>Запускается при <code>/reload</code> и загрузке мира. Здесь инициализируй Scoreboard и Storage, ставь начальные значения.</p>
+      </div>
+    </div>
+    <div class="callout callout-warn">
+      <div class="callout-label">Оптимизация</div>
+      Никогда не делай сложных вычислений прямо в tick-функции. Используй вложенные функции и вызывай их только по условию. <strong>1 тик = 1/20 секунды = 50 мс</strong>. Опоздаешь — TPS сервера упадёт.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ V — SCOREBOARD
+  ════════════════════════════════════════ -->
+  <div id="sec-scoreboard" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел V</span>
+    <span class="chapter-title">Scoreboard: переменные и кулдауны</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Создание переменных в load.mcfunction</h2>
+    <pre><span class="comment"># Таймер перезарядки</span>
+scoreboard objectives add cooldown_timer dummy
+
+<span class="comment"># Мана игрока</span>
+scoreboard objectives add mana_points dummy
+
+<span class="comment"># Отслеживать урон автоматически</span>
+scoreboard objectives add damage_taken minecraft.custom:minecraft.damage_taken</pre>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Логика кулдауна: система перезарядки</h2>
+    <div class="grid-2">
+      <div>
+        <h3>В tick.mcfunction — уменьшение таймера</h3>
+        <pre><span class="comment"># Уменьшаем у всех, у кого > 0</span>
+scoreboard players remove @a[
+  scores={cooldown_timer=1..}
+] cooldown_timer 1</pre>
+      </div>
+      <div>
+        <h3>В функции способности</h3>
+        <pre><span class="comment"># Сработать только если КД = 0</span>
+execute as @a[
+  scores={cooldown_timer=0},
+  nbt={SelectedItem:{id:"minecraft:iron_sword"}}
+] at @s run summon lightning_bolt ~ ~ ~
+
+<span class="comment"># Поставить КД 5 секунд</span>
+execute as @a[
+  scores={cooldown_timer=0},
+  nbt={SelectedItem:{id:"minecraft:iron_sword"}}
+] run scoreboard players set @s cooldown_timer 100</pre>
+      </div>
+    </div>
+    <div class="callout callout-gold">
+      <div class="callout-label">Запомни</div>
+      <strong>1 секунда = 20 тиков.</strong> Кулдаун 5 сек = 100, 10 сек = 200, 1 мин = 1200.
+    </div>
+  </div>
+
+  <div class="card card-rune fade-in">
+    <h2>Математика и операции скорборда</h2>
+    <table class="data-table op-table">
+      <tr><th>Операция</th><th>Пример</th><th>Смысл</th></tr>
+      <tr><td>=</td><td><code>scoreboard players operation @s mana = @p bonus</code></td><td>Приравнять</td></tr>
+      <tr><td>+=</td><td><code>scoreboard players operation @s coins += @p reward</code></td><td>Сложить</td></tr>
+      <tr><td>-=</td><td><code>scoreboard players operation @s hp -= @e[limit=1] dmg</code></td><td>Вычесть</td></tr>
+      <tr><td>*=</td><td><code>scoreboard players operation @s val *= #const two</code></td><td>Умножить</td></tr>
+      <tr><td>/=</td><td><code>scoreboard players operation @s pct /= #const max</code></td><td>Разделить</td></tr>
+      <tr><td>%=</td><td><code>scoreboard players operation @s id %= #const ten</code></td><td>Остаток</td></tr>
+      <tr><td>&lt;</td><td><code>scoreboard players operation @s a &lt; @s b</code></td><td>Взять минимум</td></tr>
+      <tr><td>&gt;</td><td><code>scoreboard players operation @s a &gt; @s b</code></td><td>Взять максимум</td></tr>
+      <tr><td>&gt;&lt;</td><td><code>scoreboard players operation @s a >< @s b</code></td><td>Поменять местами</td></tr>
+    </table>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Отображение данных и индикатор КД</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Sidebar и belowName</h3>
+        <pre><span class="comment"># Показать ману справа</span>
+scoreboard objectives setdisplay sidebar mana_points
+
+<span class="comment"># Показать под ником</span>
+scoreboard objectives setdisplay belowName mana_points</pre>
+      </div>
+      <div>
+        <h3>Actionbar — КД над инвентарём</h3>
+        <pre>title @a actionbar ["",
+  {"text":"Перезарядка: ","color":"gray"},
+  {"score":{
+    "name":"@s",
+    "objective":"cooldown_timer"
+  },"color":"red"}
+]</pre>
+      </div>
+    </div>
+    <h3>Визуальный кулдаун на предмете (1.21+)</h3>
+    <pre><span class="comment"># Наложить анимацию «шторки» как у эндер-перла</span>
+item cooldown @s minecraft:iron_sword 100</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ VI — STORAGE
+  ════════════════════════════════════════ -->
+  <div id="sec-storage" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел VI</span>
+    <span class="chapter-title">Command Storage: база данных</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Storage vs Scoreboard</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Scoreboard</h3>
+        <ul>
+          <li>Только целые числа</li>
+          <li>Быстрые вычисления</li>
+          <li>Идеален для таймеров, счётчиков, HP</li>
+          <li>Виден в <code>/scoreboard players list</code></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Storage</h3>
+        <ul>
+          <li>JSON — строки, массивы, объекты</li>
+          <li>Не исчезает после выхода из игры</li>
+          <li>Идеален для квестов, инвентаря персонажа, RPG-данных</li>
+          <li>Доступен из любой функции</li>
+        </ul>
+      </div>
+    </div>
+    <pre><span class="comment"># Записать данные квеста в хранилище</span>
+data modify storage aerhold:players CurrentQuest set value {
+  id:"kill_frost_giant",
+  progress:0,
+  reward:"iron_ingot"
+}
+
+<span class="comment"># Проверить активен ли квест</span>
+execute if data storage aerhold:players {
+  CurrentQuest:{id:"kill_frost_giant"}
+} run say Квест: Убить Ледяного Великана — активен!
+
+<span class="comment"># Передать данные из NBT сущности в storage</span>
+data modify storage aerhold:world SpawnPos set from entity @e[tag=spawn_marker,limit=1] Pos</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ VII — PREDICATES
+  ════════════════════════════════════════ -->
+  <div id="sec-predicates" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел VII</span>
+    <span class="chapter-title">Predicates: умные условия</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Предикаты против Execute</h2>
+    <p>Предикаты — это JSON-файлы с условиями. Они работают <strong>быстрее</strong> чем длинные цепочки <code>execute if</code>, их легко переиспользовать и комбинировать.</p>
+    <div class="grid-2">
+      <div>
+        <h3>Предикат: держит Мьёльнир</h3>
+        <pre><span class="comment">/* aerhold/predicates/
+   is_holding_mjolnir.json */</span>
+{
+  "condition": "minecraft:entity_properties",
+  "entity": "this",
+  "predicate": {
+    "equipment": {
+      "mainhand": {
+        "items": ["minecraft:netherite_axe"],
+        "predicates": {
+          "minecraft:custom_data": {
+            "aerhold_type": "mjolnir"
+          }
+        }
+      }
+    }
+  }
+}</pre>
+      </div>
+      <div>
+        <h3>Предикат: открыт шторму</h3>
+        <pre><span class="comment">/* aerhold/predicates/
+   is_exposed_to_storm.json */</span>
 {
   "condition": "minecraft:all_of",
   "terms": [
-    { "condition": "minecraft:weather_check", "is_thundering": true },
-    { "condition": "minecraft:location_check", "predicate": { "can_see_sky": true } }
-  ]
-}
-    </pre>
-    <p>Если игрок видит небо во время грозы (в заснеженном биоме это будет метель), запускается <code>freeze_player</code>, которая постепенно заполняет шкалу <code>Freezing</code> в NBT игрока.</p>
-</section>
-
-<section id="economy">
-    <h2>23. Система Баз Данных: Валюта и Репутация</h2>
-    <p>Для "сотен тысяч строк" статистики игроков мы используем связку Scoreboard (для быстрых вычислений) и Storage (для долгого хранения).</p>
-    
-    <ul>
-        <li><code>aerhold.gold</code> — основная валюта.</li>
-        <li><code>aerhold.reputation</code> — отношение фракций (Викинги, Валькирии).</li>
-    </ul>
-
-    <pre>
-# Пример сложной логики покупки:
-execute as @p if score @s aerhold.gold >= 500 run {
-  scoreboard players remove @s aerhold.gold 500
-  give @s netherite_sword{aerhold_custom:1b}
-  title @s actionbar {"text":"Вы купили Меч Одина!", "color":"gold"}
-}
-    </pre>
-</section>
-
-<section id="jar-final">
-    <h2>24. Финальная упаковка: Manifest.mf</h2>
-    <p>При переформатировании в .JAR убедись, что внутри архива по пути <code>META-INF/MANIFEST.MF</code> прописаны правильные метаданные. Это позволит лаунчерам (Fabric/Forge) распознать твой датапак как мод.</p>
-    <pre>
-Manifest-Version: 1.0
-Fabric-Loom-Version: 1.2-SNAPSHOT
-    </pre>
-</section>
-
-<section id="particles">
-    <h2>25. Атмосфера: Генерация частиц (Aurora Borealis)</h2>
-    <p>Для создания эффекта северного сияния мы используем облака частиц <code>dust</code> с переменным цветом и параметром <code>force</code>, чтобы их было видно издалека.</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Команда для сияния:</h3>
-            <pre>
-# Генерация бирюзовых частиц на большой высоте
-execute at @a run particle minecraft:dust 0.2 1.0 0.8 2 ^ ^30 ^ 10 2 10 0 100 force
-            </pre>
-        </div>
-        <div>
-            <h3>Динамика цвета:</h3>
-            <p>Через функции можно менять RGB-параметры пыли каждый тик, создавая эффект переливания от зеленого к фиолетовому.</p>
-        </div>
-    </div>
-</section>
-
-<section id="protection">
-    <h2>26. Приват зон: Interaction & Adventure Mode</h2>
-    <p>Чтобы игроки не разнесли твой спавн или квестовые локации, используй систему переключения режимов на основе <strong>Distance</strong> и <strong>Tags</strong>.</p>
-    
-    <pre>
-# Если игрок в радиусе 50 блоков от центра спавна и не имеет тега "admin"
-execute as @a[distance=..50,tag=!admin] run gamemode adventure @s
-
-# Если игрок вышел за пределы — возвращаем выживание
-execute as @a[distance=51..,gamemode=adventure,tag=!admin] run gamemode survival @s
-    </pre>
-    <p>Это самый простой и надежный способ "заприватить" территорию в чистом датапаке.</p>
-</section>
-
-<section id="structure-animation">
-    <h2>27. Анимация появления структур</h2>
-    <p>Хочешь, чтобы храм Одина "вырастал" из земли? Используй послойную загрузку через <code>structure blocks</code> и задержку в тиках.</p>
-    
-    <ol>
-        <li>Сохрани постройку по слоям (layer_0, layer_1...).</li>
-        <li>Запускай функцию, которая ставит <code>block_marker</code>.</li>
-        <li>Маркер по таймеру спавнит каждый слой: <code>place structure aerhold:temple_layer_1 ~ ~ ~</code>.</li>
-    </ol>
-</section>
-
-<section id="particles">
-    <h2>25. Атмосфера: Генерация частиц (Aurora Borealis)</h2>
-    <p>Для создания эффекта северного сияния мы используем облака частиц <code>dust</code> с переменным цветом и параметром <code>force</code>, чтобы их было видно издалека.</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Команда для сияния:</h3>
-            <pre>
-# Генерация бирюзовых частиц на большой высоте
-execute at @a run particle minecraft:dust 0.2 1.0 0.8 2 ^ ^30 ^ 10 2 10 0 100 force
-            </pre>
-        </div>
-        <div>
-            <h3>Динамика цвета:</h3>
-            <p>Через функции можно менять RGB-параметры пыли каждый тик, создавая эффект переливания от зеленого к фиолетовому.</p>
-        </div>
-    </div>
-</section>
-
-<section id="protection">
-    <h2>26. Приват зон: Interaction & Adventure Mode</h2>
-    <p>Чтобы игроки не разнесли твой спавн или квестовые локации, используй систему переключения режимов на основе <strong>Distance</strong> и <strong>Tags</strong>.</p>
-    
-    <pre>
-# Если игрок в радиусе 50 блоков от центра спавна и не имеет тега "admin"
-execute as @a[distance=..50,tag=!admin] run gamemode adventure @s
-
-# Если игрок вышел за пределы — возвращаем выживание
-execute as @a[distance=51..,gamemode=adventure,tag=!admin] run gamemode survival @s
-    </pre>
-    <p>Это самый простой и надежный способ "заприватить" территорию в чистом датапаке.</p>
-</section>
-
-<section id="structure-animation">
-    <h2>27. Анимация появления структур</h2>
-    <p>Хочешь, чтобы храм Одина "вырастал" из земли? Используй послойную загрузку через <code>structure blocks</code> и задержку в тиках.</p>
-    
-    <ol>
-        <li>Сохрани постройку по слоям (layer_0, layer_1...).</li>
-        <li>Запускай функцию, которая ставит <code>block_marker</code>.</li>
-        <li>Маркер по таймеру спавнит каждый слой: <code>place structure aerhold:temple_layer_1 ~ ~ ~</code>.</li>
-    </ol>
-</section>
-
-<section id="custom-ai">
-    <h2>28. Продвинутый ИИ: Мозги для Мобов</h2>
-    <p>Чтобы мобы не просто бегали за игроком, а патрулировали территорию или "охраняли" объект, мы используем систему <strong>Brain Tags</strong> и <code>execute facing</code>.</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Патрулирование по точкам:</h3>
-            <p>Создай невидимые маркеры (Area Effect Cloud) с тегом <code>waypoint</code>. Моб будет идти к ближайшему маркеру, пока не найдет игрока.</p>
-            <pre>
-# Заставить моба смотреть на точку маршрута
-execute as @e[tag=guard] at @s facing entity @e[tag=waypoint,limit=1,sort=nearest] feet run tp @s ^ ^ ^0.2
-            </pre>
-        </div>
-        <div>
-            <h3>Агрессия по условию:</h3>
-            <p>Используй <code>on target</code> (1.20.2+), чтобы моб атаковал только тех, кто ударил его союзника или вошел в священную зону.</p>
-        </div>
-    </div>
-</section>
-
-<section id="boss-system">
-    <h2>29. Эпические Битвы: Полоски здоровья и Фазы</h2>
-    <p>Для боссов (например, Ледяного Великана) недостаточно просто много HP. Нужны фазы боя: на 50% здоровья он должен сменить атаку.</p>
-    
-    <pre>
-# Создание полоски
-bossbar add aerhold:giant "Ледяной Великан"
-bossbar set aerhold:giant color blue
-bossbar set aerhold:giant players @a
-
-# Логика фаз (в tick.mcfunction)
-execute as @e[tag=giant_boss] store result bossbar aerhold:giant value run data get entity @s Health
-execute as @e[tag=giant_boss,nbt={Health:50f}] run function aerhold:boss_phase_2
-    </pre>
-    <p><strong>Фаза 2:</strong> Можно вызвать <code>particle</code> взрыв и выдать боссу эффект силы или новые способности (например, призыв волков).</p>
-</section>
-
-<section id="jar-pro">
-    <h2>30. Оптимизация JAR для релиза</h2>
-    <p>Когда в твоем датапаке (уже моде) становятся тысячи файлов, игра может подтормаживать при загрузке. Как это лечить?</p>
-    
-    <ul>
-        <li><strong>Сжатие JSON:</strong> Используй минификаторы (удаление пробелов и переносов строк) перед финальной сборкой.</li>
-        <li><strong>Atlas Configuration:</strong> В папке <code>assets/minecraft/atlases</code> пропиши пути к своим текстурам, чтобы Minecraft загружал их одной большой картой (это экономит FPS игрокам).</li>
-        <li><strong>Hash-кодирование:</strong> Если ты используешь кастомные звуки, убедись, что они в формате <code>.ogg</code> с битрейтом не выше 128kbps.</li>
-    </ul>
-</section>
-
-<footer style="margin-top: 50px; border-top: 2px solid #3498db; padding: 20px; text-align: center;">
-    <p>Энциклопедия KERDYS v1.0. Проект Aerhold. 2026</p>
-    <p><small>Используй Ctrl+F для поиска по тегам: NBT, Шум, JAR, Моддинг</small></p>
-</footer>
-
-<section id="gui">
-    <h2>31. Кастомные интерфейсы: Fonts & Unicode</h2>
-    <p>Чтобы в Aerhold были красивые меню или иконки в чате, мы используем систему перекрытия символов Юникода через ресурспак (внутри твоего JAR).</p>
-    
-    <div class="grid">
-        <div>
-            <h3>Файл шрифта (default.json):</h3>
-            <pre>
-{
-  "providers": [
     {
-      "type": "bitmap",
-      "file": "aerhold:font/custom_gui.png",
-      "ascent": 8,
-      "chars": ["\uE001", "\uE002"]
+      "condition": "minecraft:weather_check",
+      "is_thundering": true
+    },
+    {
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "can_see_sky": true,
+        "biome": "#aerhold:is_frozen"
+      }
     }
   ]
 }
-            </pre>
-        </div>
-        <div>
-            <h3>Использование:</h3>
-            <p>Теперь символ <code>\uE001</code> в титрах или названии предмета будет отображаться как твоя картинка (например, герб Одина или фон меню).</p>
-        </div>
+</pre>
+      </div>
     </div>
-</section>
+    <h3>Использование в функции</h3>
+    <pre>execute as @a at @s if predicate aerhold:is_holding_mjolnir run function aerhold:abilities/thunder_strike
+execute as @a at @s if predicate aerhold:is_exposed_to_storm run function aerhold:weather/freeze_player</pre>
+  </div>
 
-<section id="math-rotation">
-    <h2>32. Кватернионы: Сложные вращения моделей</h2>
-    <p>Если ты хочешь, чтобы твой 3D-моб плавно наклонялся при ходьбе или вращался по всем осям, обычных градусов недостаточно. Используются <strong>Кватернионы [x, y, z, w]</strong>.</p>
-    
-    <pre>
-# Формула поворота на 90 градусов по оси Y:
-# [0, sin(45°), 0, cos(45°)] -> [0, 0.707, 0, 0.707]
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ VIII — RAYCASTING
+  ════════════════════════════════════════ -->
+  <div id="sec-raycasting" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел VIII</span>
+    <span class="chapter-title">Raycasting: магические лучи и копья</span>
+    <span class="chapter-line"></span>
+  </div>
 
-data merge entity @e[tag=model,limit=1] {
+  <div class="card card-rune fade-in">
+    <h2>Алгоритм рейкастинга</h2>
+    <p>Рейкастинг — это рекурсивная функция, которая «летит» вперёд по 0.5 блока за вызов, пока не встретит блок или сущность. Так работают скандинавские копья, молнии и огненные шары.</p>
+    <div class="grid-2">
+      <div>
+        <h3>Шаги алгоритма</h3>
+        <ol>
+          <li>Игрок вызывает <code>aerhold:ray/start</code></li>
+          <li>Спавним маркер у глаз игрока</li>
+          <li>Маркер телепортируется на 0.5 блока вперёд</li>
+          <li>Проверяем: блок = воздух? → продолжаем</li>
+          <li>Есть сущность рядом? → наносим урон</li>
+          <li>Если блок твёрдый → останавливаемся</li>
+        </ol>
+      </div>
+      <div>
+        <h3>ray/start.mcfunction</h3>
+        <pre>summon marker ~ ~1.6 ~ {
+  Tags:["aerhold_ray","new_ray"]
+}
+execute as @e[tag=new_ray] at @s run function aerhold:ray/travel
+tag @e[tag=new_ray] remove new_ray</pre>
+      </div>
+    </div>
+    <h3>ray/travel.mcfunction</h3>
+    <pre><span class="comment"># Двигаемся вперёд на 0.5 блока</span>
+tp @s ^ ^ ^0.5
+
+<span class="comment"># Если рядом есть цель — наносим урон и удаляем луч</span>
+execute as @s at @s if entity @e[type=!player,type=!marker,distance=..1.2] run function aerhold:ray/hit
+
+<span class="comment"># Если впереди воздух — продолжаем рекурсию (макс 40 блоков)</span>
+execute as @s at @s if block ~ ~ ~ air run function aerhold:ray/travel
+
+<span class="comment"># Если блок — стоп</span>
+execute as @s at @s unless block ~ ~ ~ air run kill @s</pre>
+    <h3>ray/hit.mcfunction</h3>
+    <pre><span class="comment"># Наносим урон ближайшей сущности</span>
+damage @e[type=!player,type=!marker,distance=..1.2,limit=1] 8 aerhold:frost
+
+<span class="comment"># Эффекты попадания</span>
+particle minecraft:snowflake ~ ~ ~ 0.3 0.3 0.3 0.05 30
+playsound minecraft:block.glass.break block @a ~ ~ ~ 1 1.5
+
+kill @s</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ IX — СУЩНОСТИ
+  ════════════════════════════════════════ -->
+  <div id="sec-entities" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел IX</span>
+    <span class="chapter-title">Item Display и Interaction: кастомные мобы</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Современный стандарт: Display + Interaction</h2>
+    <p>Забудь про Armor Stand. Теперь используют связку: <strong>Item Display</strong> для визуала и <strong>Interaction</strong> для хитбокса.</p>
+    <div class="grid-2">
+      <div>
+        <h3>Визуал — Item Display</h3>
+        <pre>summon item_display ~ ~ ~ {
+  item:{
+    id:"minecraft:netherite_axe",
+    Count:1b,
+    components:{
+      "minecraft:custom_model_data":1001
+    }
+  },
+  transformation:{
+    left_rotation:[0f,0f,0f,1f],
+    right_rotation:[0f,0f,0f,1f],
+    translation:[0f,0.5f,0f],
+    scale:[2f,2f,2f]
+  },
+  interpolation_duration:10,
+  Tags:["aerhold_mob","visual"]
+}</pre>
+      </div>
+      <div>
+        <h3>Хитбокс — Interaction</h3>
+        <pre>summon interaction ~ ~ ~ {
+  width:1.5f,
+  height:3.0f,
+  attack:{
+    player:"",
+    timestamp:0L
+  },
+  Tags:["aerhold_mob","hitbox"]
+}
+
+<span class="comment"># Проверка удара по сущности</span>
+execute as @e[tag=hitbox] if entity @s[
+  nbt={attack:{player:""}}
+] run function aerhold:mob/take_damage</pre>
+      </div>
+    </div>
+    <div class="callout callout-tip">
+      <div class="callout-label">Совет</div>
+      Связывай Display и Interaction тегом UUID или ridable-системой. Оба должны телепортироваться вместе в tick-функции: <code>execute as @e[tag=visual] at @s run tp @e[tag=hitbox,distance=..10,limit=1] ~ ~ ~</code>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ X — АНИМАЦИИ
+  ════════════════════════════════════════ -->
+  <div id="sec-animations" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел X</span>
+    <span class="chapter-title">Анимация и кватернионы</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Transformation Interpolation</h2>
+    <p>Вместо сотен команд <code>tp</code> используется интерполяция. Игра сама рассчитывает плавный переход.</p>
+    <div class="grid-2">
+      <div>
+        <h3>Плавный поворот за 1 секунду</h3>
+        <pre>data merge entity @e[tag=viking_statue,limit=1] {
+  start_interpolation: 0,
+  interpolation_duration: 20,
   transformation: {
-    left_rotation: [0f, 0.707f, 0f, 0.707f]
+    left_rotation: [0f,0.707f,0f,0.707f],
+    right_rotation: [0f,0f,0f,1f],
+    translation: [0f,0f,0f],
+    scale: [1f,1f,1f]
+  }
+}</pre>
+      </div>
+      <div>
+        <h3>Применения</h3>
+        <ul>
+          <li>Открывающиеся ворота крепости</li>
+          <li>Вращающиеся руны вокруг алтаря</li>
+          <li>Плавный взлёт драккара</li>
+          <li>Анимация удара босса</li>
+          <li>Пульсация защитной сферы</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-rune fade-in">
+    <h2>Кватернионы: вращение по всем осям <span class="badge badge-adv">Math</span></h2>
+    <p>Для сложных 3D-вращений нужны кватернионы <code>[x, y, z, w]</code>, а не просто градусы.</p>
+    <table class="data-table">
+      <tr><th>Поворот</th><th>Кватернион [x,y,z,w]</th><th>Пример</th></tr>
+      <tr><td>0° (нейтральный)</td><td>[0, 0, 0, 1]</td><td>Стоп</td></tr>
+      <tr><td>90° по Y</td><td>[0, 0.707, 0, 0.707]</td><td>Повернуть налево</td></tr>
+      <tr><td>180° по Y</td><td>[0, 1, 0, 0]</td><td>Развернуть</td></tr>
+      <tr><td>90° по X</td><td>[0.707, 0, 0, 0.707]</td><td>Наклонить вперёд</td></tr>
+      <tr><td>45° по Z</td><td>[0, 0, 0.383, 0.924]</td><td>Накренить</td></tr>
+    </table>
+    <div class="callout callout-tip">
+      <div class="callout-label">Лайфхак</div>
+      Используй онлайн-калькулятор "Euler angles to Quaternion" — не считай вручную. Формула: <em>w = cos(θ/2), x/y/z = ось × sin(θ/2)</em>
+    </div>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Анимация появления структур</h2>
+    <p>Хочешь, чтобы храм Одина «вырастал» из земли? Послойная загрузка через таймер:</p>
+    <pre><span class="comment"># aerhold:animation/temple_rise</span>
+<span class="comment"># Запускаем слои с задержкой через schedule</span>
+schedule function aerhold:animation/temple_layer_1 5t
+schedule function aerhold:animation/temple_layer_2 10t
+schedule function aerhold:animation/temple_layer_3 15t
+schedule function aerhold:animation/temple_layer_4 20t
+
+<span class="comment"># В каждом слое:</span>
+<span class="comment"># place structure aerhold:temple_layer_1 ~ ~ ~</span>
+<span class="comment"># particle minecraft:large_smoke ~ ~ ~ 2 1 2 0 30</span></pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XI — ИИ МОБОВ
+  ════════════════════════════════════════ -->
+  <div id="sec-ai" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XI</span>
+    <span class="chapter-title">Продвинутый ИИ мобов</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Патрулирование по точкам</h2>
+    <p>Невидимые маркеры (Area Effect Cloud) с тегом <code>waypoint</code> задают маршрут охранника.</p>
+    <div class="grid-2">
+      <div>
+        <h3>Расстановка точек</h3>
+        <pre><span class="comment"># Создаём точки маршрута</span>
+summon area_effect_cloud 10 64 20 {
+  Tags:["waypoint","patrol_1"],
+  Age:-2147483648,
+  Duration:-1
+}
+summon area_effect_cloud 30 64 20 {
+  Tags:["waypoint","patrol_2"],
+  Age:-2147483648,
+  Duration:-1
+}</pre>
+      </div>
+      <div>
+        <h3>Логика движения охранника</h3>
+        <pre><span class="comment"># Смотрим и идём к ближайшей точке</span>
+execute as @e[tag=guard] at @s
+  unless entity @p[distance=..15]
+  facing entity @e[tag=waypoint,
+    limit=1,sort=nearest] feet
+  run tp @s ^ ^ ^0.2
+
+<span class="comment"># Если игрок близко — атакуем</span>
+execute as @e[tag=guard] at @s
+  if entity @p[distance=..15]
+  run function aerhold:ai/guard_alert</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XII — БОЕВАЯ СИСТЕМА
+  ════════════════════════════════════════ -->
+  <div id="sec-combat" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XII</span>
+    <span class="chapter-title">Боевая система: урон, чары, щиты</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Кастомные типы урона <span class="badge badge-1_21">1.20+</span></h2>
+    <p>Создаём <code>aerhold:frost</code> — обморожение, которое игнорирует броню и пишет своё сообщение о смерти.</p>
+    <div class="grid-2">
+      <div>
+        <h3>data/aerhold/damage_type/frost.json</h3>
+        <pre>{
+  "exhaustion": 0.1,
+  "message_id": "frostbite",
+  "scaling": "when_enchanted",
+  "effects": "freezing",
+  "death_message_type": "default"
+}</pre>
+        <p>Сообщение в lang: <code>death.attack.frostbite = %1$s замёрз в льдах Нифльхейма</code></p>
+      </div>
+      <div>
+        <h3>Применение в коде</h3>
+        <pre><span class="comment"># Нанести 5 единиц урона морозом</span>
+damage @s 5 aerhold:frost
+
+<span class="comment"># Нанести урон от источника</span>
+damage @p 8 aerhold:frost by @e[
+  tag=ice_giant,limit=1
+]
+
+<span class="comment"># Урон с эффектом</span>
+execute as @e[tag=ice_giant] at @s run {
+  damage @p[distance=..3] 8 aerhold:frost by @s
+  effect give @p[distance=..3] slowness 60 2 true
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-rune fade-in">
+    <h2>Кастомные чары (1.21+) <span class="badge badge-new">New</span></h2>
+    <p>В 1.21 чары — это JSON-файлы. Создаём «Аспект мороза», который срабатывает при ударе и замедляет цель.</p>
+    <pre><span class="comment">/* data/aerhold/enchantment/frost_aspect.json */</span>
+{
+  "description": {"translate": "enchantment.aerhold.frost_aspect"},
+  "supported_items": "#minecraft:enchantable/sharpness",
+  "primary_items": "#minecraft:enchantable/sword",
+  "weight": 5,
+  "max_level": 3,
+  "min_cost": {"base": 5, "per_level_above_first": 8},
+  "max_cost": {"base": 25, "per_level_above_first": 8},
+  "anvil_cost": 2,
+  "slots": ["mainhand"],
+  "effects": {
+    "minecraft:post_attack": [{
+      "enchanted": "attacker",
+      "affected": "victim",
+      "effect": {
+        "type": "minecraft:apply_mob_effect",
+        "to_apply": "minecraft:slowness",
+        "min_duration": {"type":"minecraft:linear","base":20,"per_level_above_first":20},
+        "max_duration": {"type":"minecraft:linear","base":60,"per_level_above_first":40},
+        "min_amplifier": 0,
+        "max_amplifier": {"type":"minecraft:linear","base":0,"per_level_above_first":1}
+      }
+    }]
+  }
+}</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XIII — БОССЫ
+  ════════════════════════════════════════ -->
+  <div id="sec-boss" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XIII</span>
+    <span class="chapter-title">Система боссов и фазы боя</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Полоска здоровья и фазы</h2>
+    <pre><span class="comment"># В load.mcfunction — создаём bossbar</span>
+bossbar add aerhold:giant "§bЛедяной Великан"
+bossbar set aerhold:giant color blue
+bossbar set aerhold:giant style progress
+bossbar set aerhold:giant max 500
+
+<span class="comment"># В tick — синхронизируем HP босса с баром</span>
+execute as @e[tag=giant_boss,limit=1] store result bossbar aerhold:giant value run data get entity @s Health 1
+
+<span class="comment"># Показываем / скрываем игрокам</span>
+execute if entity @e[tag=giant_boss] run bossbar set aerhold:giant players @a
+execute unless entity @e[tag=giant_boss] run bossbar set aerhold:giant players []
+
+<span class="comment"># Логика фаз — переход на 50%</span>
+execute as @e[tag=giant_boss,limit=1] store result score #hp temp run data get entity @s Health 1
+execute if score #hp temp matches ..125 unless score #phase temp matches 2 run function aerhold:boss/phase_2</pre>
+    <h3>boss/phase_2.mcfunction</h3>
+    <pre>scoreboard players set #phase temp 2
+
+<span class="comment"># Визуальный эффект перехода</span>
+execute as @e[tag=giant_boss] at @s run {
+  particle minecraft:explosion_emitter ~ ~1 ~ 0 0 0 0 1
+  playsound minecraft:entity.ender_dragon.growl hostile @a ~ ~ ~ 2 0.7
+  effect give @e[tag=giant_boss] strength 60 1 true
+}
+
+<span class="comment"># Призываем волков-миньонов</span>
+execute as @e[tag=giant_boss] at @s run function aerhold:boss/summon_wolves
+
+bossbar set aerhold:giant color red
+bossbar set aerhold:giant name "§cЛедяной Великан — Ярость"</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XIV — ЛУТАНИЕ
+  ════════════════════════════════════════ -->
+  <div id="sec-loot" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XIV</span>
+    <span class="chapter-title">Loot Tables: случайные атрибуты</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Мечи со случайным уроном</h2>
+    <p>Функция <code>set_attributes</code> создаёт «сотни тысяч» уникальных предметов без ручного прописывания каждого.</p>
+    <pre>{
+  "type": "minecraft:item",
+  "name": "minecraft:netherite_sword",
+  "functions": [
+    {
+      "function": "minecraft:set_attributes",
+      "modifiers": [
+        {
+          "attribute": "minecraft:generic.attack_damage",
+          "id": "aerhold:random_might",
+          "amount": {
+            "type": "minecraft:uniform",
+            "min_inclusive": 5.0,
+            "max_inclusive": 12.0
+          },
+          "operation": "add_value",
+          "slot": "mainhand"
+        },
+        {
+          "attribute": "minecraft:generic.attack_speed",
+          "id": "aerhold:random_speed",
+          "amount": {
+            "type": "minecraft:uniform",
+            "min_inclusive": -0.5,
+            "max_inclusive": 0.5
+          },
+          "operation": "add_value",
+          "slot": "mainhand"
+        }
+      ]
+    },
+    {
+      "function": "minecraft:set_name",
+      "name": {"text": "Меч Павшего Воина", "color": "gold", "italic": true}
+    },
+    {
+      "function": "minecraft:set_lore",
+      "lore": [
+        {"text": "Найден среди льдов Нифльхейма", "color": "gray", "italic": true},
+        {"text": "Урон: случайный", "color": "dark_gray", "italic": false}
+      ]
+    }
+  ]
+}</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XV — ДАННЫЕ И ЭКОНОМИКА
+  ════════════════════════════════════════ -->
+  <div id="sec-data" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XV</span>
+    <span class="chapter-title">Валюта, репутация и экономика</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-rune fade-in">
+    <h2>Система баз данных проекта Aerhold</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Scoreboard — быстрые числа</h3>
+        <pre><span class="comment"># В load.mcfunction</span>
+scoreboard objectives add aerhold.gold dummy "§6Золото"
+scoreboard objectives add aerhold.rep_vikings dummy "Репутация: Викинги"
+scoreboard objectives add aerhold.rep_valkyries dummy "Репутация: Валькирии"
+scoreboard objectives add aerhold.level dummy "Уровень"</pre>
+      </div>
+      <div>
+        <h3>Storage — сложные данные</h3>
+        <pre><span class="comment"># Профиль персонажа</span>
+data modify storage aerhold:char Profile set value {
+  name: "KERDYS",
+  class: "berserker",
+  skills: ["rage","fury"],
+  kills: 0,
+  completed_quests: []
+}</pre>
+      </div>
+    </div>
+    <h3>Транзакция покупки</h3>
+    <pre><span class="comment"># Покупка: проверка → списание → выдача</span>
+execute as @p if score @s aerhold.gold matches 500.. run function aerhold:shop/buy_odin_sword
+
+<span class="comment"># aerhold/functions/shop/buy_odin_sword.mcfunction</span>
+scoreboard players remove @s aerhold.gold 500
+give @s minecraft:netherite_sword{
+  aerhold_id:"odin_sword",
+  display:{Name:'{"text":"Меч Одина","color":"gold","bold":true}'}
+}
+title @s actionbar {"text":"Вы купили Меч Одина!","color":"gold"}</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XVI — АТМОСФЕРА
+  ════════════════════════════════════════ -->
+  <div id="sec-atmosphere" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XVI</span>
+    <span class="chapter-title">Атмосфера: частицы и погода</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Aurora Borealis: северное сияние</h2>
+    <div class="grid-2">
+      <div>
+        <h3>Генерация частиц</h3>
+        <pre><span class="comment"># Бирюзовые частицы на высоте 30 блоков</span>
+execute at @a run particle minecraft:dust{
+  r:0.2,g:1.0,b:0.8,scale:2
+} ^ ^30 ^ 10 2 10 0 100 force
+
+<span class="comment"># Фиолетовый вариант</span>
+execute at @a run particle minecraft:dust{
+  r:0.7,g:0.2,b:1.0,scale:1.5
+} ^ ^32 ^ 8 1 8 0 80 force</pre>
+      </div>
+      <div>
+        <h3>Динамика цвета</h3>
+        <p>Меняй RGB каждые 40 тиков через Scoreboard — плавная смена от зелёного к синему и фиолетовому создаёт эффект переливания.</p>
+        <pre>execute if score #aurora_color temp matches 0 run scoreboard players set #aurora_color temp 1
+<span class="comment"># 0 = green, 1 = cyan, 2 = purple</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Динамическая погода: снежные бури</h2>
+    <pre><span class="comment"># В tick.mcfunction</span>
+execute as @a at @s if predicate aerhold:is_exposed_to_storm run function aerhold:weather/freeze_player
+
+<span class="comment"># aerhold/functions/weather/freeze_player.mcfunction</span>
+effect give @s minecraft:slowness 3 1 true
+data modify entity @s FrozenTicks set value 160
+
+<span class="comment"># Если игрок слишком долго на морозе</span>
+execute as @a if score @s freeze_ticks matches 400.. at @s run {
+  damage @s 2 aerhold:frost
+  title @s actionbar {"text":"⟨Вы замерзаете⟩","color":"aqua","bold":true}
+}</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XVII — ЗВУКИ
+  ════════════════════════════════════════ -->
+  <div id="sec-sounds" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XVII</span>
+    <span class="chapter-title">Звуковой ландшафт</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-rune fade-in">
+    <h2>sounds.json: атмосфера Скандинавии</h2>
+    <pre><span class="comment">/* assets/aerhold/sounds.json */</span>
+{
+  "ambient.arctic_wind": {
+    "category": "ambient",
+    "sounds": [
+      {"name": "aerhold:ambient/wind_loop_1", "stream": true, "volume": 0.8},
+      {"name": "aerhold:ambient/wind_loop_2", "stream": true, "volume": 0.6}
+    ]
+  },
+  "ambient.raven_call": {
+    "category": "ambient",
+    "sounds": [
+      "aerhold:ambient/raven_1",
+      "aerhold:ambient/raven_2",
+      "aerhold:ambient/raven_3"
+    ]
+  },
+  "item.horn.viking_call": {
+    "category": "player",
+    "sounds": [{"name": "aerhold:item/horn_blast", "pitch": 0.9}]
+  },
+  "music.niflheim": {
+    "category": "music",
+    "sounds": [
+      {"name": "aerhold:music/niflheim_theme", "stream": true, "volume": 0.5}
+    ]
+  }
+}</pre>
+    <h3>Использование в функциях</h3>
+    <pre>playsound aerhold:ambient.arctic_wind ambient @a ~ ~ ~ 1 1
+playsound aerhold:item.horn.viking_call player @a ~ ~ ~ 2 1
+playsound aerhold:music.niflheim music @a ~ ~ ~ 0.5 1</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XVIII — GUI И ШРИФТЫ
+  ════════════════════════════════════════ -->
+  <div id="sec-gui" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XVIII</span>
+    <span class="chapter-title">Кастомный GUI и Unicode-шрифты</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Bitmap Fonts: иконки и меню</h2>
+    <p>Картинка как символ Unicode — основа кастомного HUD в ресурспаке внутри JAR.</p>
+    <div class="grid-2">
+      <div>
+        <h3>assets/minecraft/font/default.json</h3>
+        <pre>{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "aerhold:font/hud_icons.png",
+      "ascent": 8,
+      "height": 16,
+      "chars": [
+        "\uE001\uE002\uE003\uE004"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "aerhold:font/rune_bg.png",
+      "ascent": 20,
+      "height": 128,
+      "chars": ["\uE010"]
+    }
+  ]
+}</pre>
+      </div>
+      <div>
+        <h3>Как использовать</h3>
+        <p><code>\uE001</code> — иконка маны, <code>\uE002</code> — иконка золота, <code>\uE010</code> — фоновая картинка меню.</p>
+        <pre>title @s actionbar {
+  "text": "\uE001 Мана: ",
+  "color": "aqua",
+  "extra": [{
+    "score": {
+      "name": "@s",
+      "objective": "mana_points"
+    },
+    "color": "white"
+  }]
+}</pre>
+        <p>Теперь перед числом маны будет кастомная иконка!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XIX — ПРИВАТ
+  ════════════════════════════════════════ -->
+  <div id="sec-protection" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XIX</span>
+    <span class="chapter-title">Приват зон и защита от читов</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Приват через режимы игры</h2>
+    <pre><span class="comment"># Если в радиусе 50 блоков от центра и не админ</span>
+execute as @a[distance=..50,tag=!admin] run gamemode adventure @s
+
+<span class="comment"># Вышел за пределы — возвращаем выживание</span>
+execute as @a[distance=51..,gamemode=adventure,tag=!admin] run gamemode survival @s
+
+<span class="comment"># Выдать права админа</span>
+tag @p add admin
+
+<span class="comment"># Забрать права</span>
+tag @p remove admin</pre>
+    <div class="callout callout-tip">
+      <div class="callout-label">Совет</div>
+      Для более сложных зон используй <code>execute in</code> + маркеры с тегами зон, чтобы не привязываться к координатам.
+    </div>
+  </div>
+
+  <div class="card card-rune fade-in">
+    <h2>Защита от читов (серверная)</h2>
+    <pre><span class="comment"># Антикилла: слишком быстро убивает — кик</span>
+execute as @a[tag=!admin] at @s if score @s damage_dealt matches 200.. run function aerhold:security/suspicious_player
+
+<span class="comment"># aerhold/functions/security/suspicious_player.mcfunction</span>
+tellraw @a[tag=admin] [
+  {"text":"[SECURITY] "},
+  {"selector":"@s"},
+  {"text":" — подозрительный урон!","color":"red"}
+]
+scoreboard players set @s damage_dealt 0
+
+<span class="comment"># Логировать в storage для записи</span>
+data modify storage aerhold:logs Suspicious append value {
+  player: "",
+  reason: "high_damage"
+}</pre>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XX — JAR / FABRIC
+  ════════════════════════════════════════ -->
+  <div id="sec-jar" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XX</span>
+    <span class="chapter-title">Конвертация в JAR / Fabric-мод</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Структура Fabric-мода</h2>
+    <pre>aerhold_mod/
+├── build.gradle
+├── gradle.properties
+├── settings.gradle
+└── src/main/resources/
+    ├── fabric.mod.json      <span class="comment">← манифест мода</span>
+    ├── pack.mcmeta          <span class="comment">← из датапака</span>
+    ├── data/                <span class="comment">← весь твой data/ сюда</span>
+    └── assets/
+        └── aerhold/
+            ├── textures/
+            ├── models/
+            ├── sounds/
+            └── lang/
+                └── ru_ru.json</pre>
+  </div>
+
+  <div class="card fade-in">
+    <h2>fabric.mod.json</h2>
+    <pre>{
+  "schemaVersion": 1,
+  "id": "aerhold_core",
+  "version": "1.0.0",
+  "name": "Aerhold Project",
+  "description": "Скандинавская мифология для Minecraft",
+  "authors": ["KERDYS"],
+  "contact": {
+    "discord": "0._.observer._.0",
+    "sources": "https://github.com/yourlink"
+  },
+  "license": "MIT",
+  "icon": "assets/aerhold/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": []
+  },
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": "~1.21",
+    "java": ">=21"
+  }
+}</pre>
+  </div>
+
+  <div id="sec-gradle" class="card card-rune fade-in">
+    <h2>Автосборка через Gradle</h2>
+    <pre><span class="comment">// build.gradle (фрагмент)</span>
+plugins {
+  id 'fabric-loom' version '1.6-SNAPSHOT'
+}
+
+version = "1.0.0"
+group = "dev.kerdys"
+
+jar {
+  from("src/main/resources") {
+    include "data/**"
+    include "assets/**"
+    include "fabric.mod.json"
+    include "pack.mcmeta"
   }
 }
-    </pre>
-    <p><i>Совет: используй онлайн-калькуляторы "Euler to Quaternion", чтобы не считать это вручную.</i></p>
-</section>
 
-<section id="mod-compat">
-    <h2>33. Интеграция: Тэги и Совместимость</h2>
-    <p>Чтобы твой датапак-мод "видел" предметы из других модов (например, если игрок поставил JEI или REI), всегда используй <strong>Тэги (#)</strong> вместо прямых ID.</p>
-    
+<span class="comment">// Команда для сборки:</span>
+<span class="comment">// ./gradlew build</span>
+<span class="comment">// Готовый .jar в build/libs/</span></pre>
+    <div class="callout callout-warn">
+      <div class="callout-label">Важно</div>
+      JAR-мод автоматически загружает датапак при создании <em>любого</em> мира. Это идеально для серверных сборок — не нужно добавлять датапак вручную каждый раз.
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════
+       РАЗДЕЛ XXI — ПРОДВИНУТОЕ
+  ════════════════════════════════════════ -->
+  <div id="sec-advanced" class="chapter-header fade-in">
+    <span class="chapter-num">Раздел XXI</span>
+    <span class="chapter-title">Оптимизация и автоматизация</span>
+    <span class="chapter-line"></span>
+  </div>
+
+  <div class="card card-gold fade-in">
+    <h2>Совместимость: используй теги #c</h2>
+    <p>Чтобы рецепты Aerhold принимали ресурсы из любых других модов — никогда не используй прямые ID предметов там, где можно использовать общепринятые теги Fabric/Forge.</p>
+    <table class="data-table">
+      <tr><th>Прямой ID (плохо)</th><th>Тег (хорошо)</th></tr>
+      <tr><td><code>minecraft:iron_ingot</code></td><td><code>#c:iron_ingots</code></td></tr>
+      <tr><td><code>minecraft:gold_ingot</code></td><td><code>#c:gold_ingots</code></td></tr>
+      <tr><td><code>minecraft:diamond</code></td><td><code>#c:gems/diamond</code></td></tr>
+      <tr><td><code>minecraft:coal</code></td><td><code>#c:coal</code></td></tr>
+      <tr><td><code>minecraft:log</code></td><td><code>#minecraft:logs</code></td></tr>
+    </table>
+  </div>
+
+  <div class="card fade-in">
+    <h2>Автогенерация файлов: Python-скрипт</h2>
+    <p>Когда нужно создать 500 рецептов — пишешь скрипт, а не файлы вручную.</p>
+    <pre><span class="comment"># generate_recipes.py</span>
+import json
+import os
+
+metals = ["iron", "gold", "netherite", "diamond", "emerald"]
+weapons = ["sword", "axe", "pickaxe", "shovel"]
+
+for metal in metals:
+    for weapon in weapons:
+        recipe = {
+            "type": "minecraft:crafting_shaped",
+            "pattern": ["XX", "X ", " X"],
+            "key": {
+                "X": f"minecraft:{metal}_ingot"
+            },
+            "result": {
+                "id": f"aerhold:{metal}_{weapon}",
+                "count": 1
+            }
+        }
+        path = f"data/aerhold/recipes/{metal}_{weapon}.json"
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w") as f:
+            json.dump(recipe, f, indent=2, ensure_ascii=False)</pre>
+  </div>
+
+  <div class="card card-rune fade-in">
+    <h2>Оптимизация JAR для релиза</h2>
     <ul>
-        <li>Вместо <code>minecraft:iron_ingot</code> используй <code>#c:iron_ingots</code> (общепринятый стандарт Fabric/Forge для всех модов).</li>
-        <li>Это позволит твоим рецептам в Aerhold принимать железо из любого другого технического мода.</li>
+      <li><strong>Сжатие JSON:</strong> Убирай пробелы и переносы строк перед финальной сборкой — экономит размер файла.</li>
+      <li><strong>Atlas:</strong> В <code>assets/minecraft/atlases/blocks.json</code> пропиши пути к своим текстурам. Игра загрузит их одной картой → экономия FPS.</li>
+      <li><strong>Звуки в .ogg:</strong> Формат <code>.ogg</code>, битрейт не выше 128 kbps, моно для эмбиента.</li>
+      <li><strong>Macros в функциях:</strong> Использование <code>$</code> для динамических аргументов — мощнее, чем дублировать функции.</li>
+      <li><strong>Schedule вместо циклов:</strong> Долгие таймеры делай через <code>schedule function</code>, а не через тик-счётчик.</li>
     </ul>
-</section>
+    <pre><span class="comment"># Пример Macro-функции (1.20.2+)</span>
+<span class="comment"># Вызов: function aerhold:give_weapon {type:"frost_axe"}</span>
 
-<section id="security">
-    <h2>34. Защита от взлома (Server-side Checks)</h2>
-    <p>Поскольку твой код работает на сервере, ты можешь проверять легитимность действий игрока. Например, если игрок наносит слишком много урона без нужных тегов:</p>
-    <pre>
-# Проверка на киллауру / читы на урон
-execute as @a[tag=!admin] at @s if score @s damage_dealt matches 100.. run kick @s "Suspicious Damage"
-    </pre>
-</section>
+$give @s minecraft:netherite_axe{aerhold_type:"$(type)"}
+$tell @s Получено оружие: $(type)</pre>
+  </div>
 
-<div class="wiki-section">
-    <h2>1. Выдача эффектов (Команда Effect)</h2>
-    <p>Базовая выдача эффекта игроку. <b>1 0 true</b> — это 1 секунда, 0 уровень (первый), скрытие частиц.</p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-# Выдать силу на 1 секунду без пузырьков
-effect give @s minecraft:strength 1 0 true
-
-# Снять все эффекты с игрока
-effect clear @s</pre>
-
-    <h2>2. Эффект при ношении предмета (Атрибуты)</h2>
-    <p>В новых версиях (1.21+) можно давать ХП или скорость прямо через предмет, без команд в тике!</p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-# Выдать шлем, который дает +2 сердца (4 хп)
-/give @p netherite_helmet[attribute_modifiers={modifiers:[{type:"minecraft:generic.max_health",amount:4,slot:"head",id:"aerhold:health_boost",operation:"add_value"}]}]</pre>
-
-    <h2>3. Проверка предмета в руке (SelectedItem)</h2>
-    <p>Если хочешь, чтобы эффект давался, только когда игрок ДЕРЖИТ меч:</p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px; white-space: pre-wrap;">
-# В tick.mcfunction: даем скорость, если в главной руке наш меч
-execute as @a[nbt={SelectedItem:{id:"minecraft:netherite_sword",components:{"minecraft:custom_data":{aerhold_weapon:1}}}}] run effect give @s minecraft:speed 1 1 true</pre>
-
-    <h2>4. Выполнение команды от лица моба/игрока</h2>
-    <p>Самая важная команда — <code>execute</code>. Она позволяет менять "точку сборки" кода.</p>
-    <table border="1" style="width:100%; border-collapse: collapse;">
-        <tr><th>Команда</th><th>Что делает</th></tr>
-        <tr><td><code>execute as @e[type=zombie]</code></td><td>Запуск кода ОТ ЛИЦА всех зомби</td></tr>
-        <tr><td><code>execute at @s</code></td><td>Запуск В ТОЧКЕ, где стоит игрок</td></tr>
-        <tr><td><code>execute if entity @p[distance=..5]</code></td><td>Если игрок в радиусе 5 блоков</td></tr>
-        <tr><td><code>execute anchored eyes</code></td><td>Считать координаты от ГЛАЗ, а не от ног</td></tr>
-    </table>
-
-    <h2>5. Логика "Если... То..." (Execute Store)</h2>
-    <p>Например, если хочешь ударить молнией того, кто ударил тебя (через скорборд):</p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-# Проверка: если игрок получил урон (нужен скорборд damage_taken)
-execute as @a[scores={damage_taken=1..}] at @s run summon lightning_bolt ~ ~ ~
-scoreboard players set @a[scores={damage_taken=1..}] damage_taken 0</pre>
-
-    <h2>6. Звуки (Playsound)</h2>
-    <p>Чтобы магия чувствовалась, добавляй звук. <b>ambient</b> — категория, <b>@s</b> — кому слышно, <b>~ ~ ~</b> — где, <b>1</b> — громкость, <b>1</b> — тон.</p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-playsound minecraft:entity.warden.sonic_boom ambient @a ~ ~ ~ 1 0.5</pre>
-</div>
-
-<div class="wiki-section">
-    <h2>1. Создание переменной (Scoreboard)</h2>
-    <p>Сначала нужно создать саму «ячейку памяти». Это делается один раз (в файле <code>load.mcfunction</code>).</p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-# Создать задачу для кулдауна (тип dummy — меняется только командами)
-scoreboard objectives add cooldown_timer dummy
-
-# Создать задачу для маны (автоматически растет, если хочешь)
-scoreboard objectives add mana_points dummy</pre>
-
-    <h2>2. Логика Кулдауна (Перезарядки)</h2>
-    <p>Представь: игрок нажал на предмет, сработала магия, и мы поставили ему счетчик 100 (5 секунд). Каждое мгновение мы отнимаем по 1. Пока счетчик больше 0 — магия не сработает.</p>
-    
-    <p><b>Шаг А: Уменьшение счетчика (в tick.mcfunction):</b></p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-# Уменьшаем таймер у всех, у кого он больше 0
-scoreboard players remove @a[scores={cooldown_timer=1..}] cooldown_timer 1</pre>
-
-    <p><b>Шаг Б: Проверка перед использованием:</b></p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-# Сработать (молния), только если таймер = 0 и игрок держит меч
-execute as @a[scores={cooldown_timer=0}, nbt={SelectedItem:{id:"minecraft:iron_sword"}}] at @s run summon lightning_bolt ~ ~ ~
-
-# Сразу после срабатывания ставим кулдаун 100 тиков (5 сек)
-execute as @a[scores={cooldown_timer=0}, nbt={SelectedItem:{id:"minecraft:iron_sword"}}] run scoreboard players set @s cooldown_timer 100</pre>
-
-    <h2>3. Математика в Скорбордах (Operations)</h2>
-    <p>Ты можешь складывать, вычитать и умножать очки игроков. Например, передать очки одного игрока другому.</p>
-    <table border="1" style="width:100%; border-collapse: collapse;">
-        <tr><th>Операция</th><th>Пример кода</th></tr>
-        <tr><td>Приравнять (=)</td><td><code>scoreboard players operation @s mana = @p old_mana</code></td></tr>
-        <tr><td>Сложить (+=)</td><td><code>scoreboard players operation @s coins += @p bonus</code></td></tr>
-        <tr><td>Вычесть (-=)</td><td><code>scoreboard players operation @s hp -= @e[limit=1] damage</code></td></tr>
-    </table>
-
-    <h2>4. Вывод очков на экран (Sidebar)</h2>
-    <p>Чтобы игрок видел свою ману или КД справа на экране или под ником.</p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-# Показать список справа (sidebar)
-scoreboard objectives setdisplay sidebar mana_points
-
-# Показать под ником (belowName)
-scoreboard objectives setdisplay belowName mana_points</pre>
-
-    <h2>5. Кулдаун через предмет (Версия 1.21+)</h2>
-    <p>В новых версиях можно сделать визуальную «шторку» на предмете, как у эндер-перла, без скорбордов!</p>
-    <pre style="background: #222; color: #50fa7b; padding: 10px;">
-# Наложить кулдаун 100 тиков на все железные мечи игрока
-item cooldown @s minecraft:iron_sword 100</pre>
-</div>
-
-<div class="wiki-section" style="border-top: 2px solid #ffcc00; margin-top: 30px;">
-    <h2 style="color: #ffcc00;">💡 Советы по оптимизации и визуалу</h2>
-    
-    <div style="background: #1a1a1d; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-        <h3>1. Забытые "Тики" (Время в игре)</h3>
-        <p>Помни: <b>1 секунда = 20 тиков</b>. Если хочешь кулдаун на 10 секунд — ставь в скорборд <b>200</b>.</p>
-        <p>Если хочешь, чтобы частицы летели медленно — ставь скорость <b>0.01</b>, если быстро — <b>0.5+</b>.</p>
+  <div class="card fade-in">
+    <h2>Финальные советы от Кердиса</h2>
+    <div class="grid-2">
+      <div>
+        <div class="callout callout-gold">
+          <div class="callout-label">Разработка</div>
+          Используй VS Code + расширение «Datapack Helper Plus» — автодополнение NBT, путей к файлам и команд прямо в редакторе.
+        </div>
+        <div class="callout callout-tip">
+          <div class="callout-label">Тестирование</div>
+          Тестируй в режиме <code>spectator</code> с <code>gamemode creative</code>. Используй <code>/reload</code> после каждого изменения.
+        </div>
+      </div>
+      <div>
+        <div class="callout callout-warn">
+          <div class="callout-label">Ошибки</div>
+          Смотри логи в <code>logs/latest.log</code>. Большинство ошибок датапака — это опечатки в путях к файлам или неправильный <code>pack_format</code>.
+        </div>
+        <div class="callout callout-gold">
+          <div class="callout-label">Вдохновение</div>
+          Изучай ванильные датапаки Minecraft — они находятся внутри JAR игры по пути <code>/data/minecraft/</code>. Лучший учитель.
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div style="background: #1a1a1d; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-        <h3>2. Скрывай лишнее (Clean UI)</h3>
-        <p>В крутых проектах вроде <b>Aerhold</b> не должно быть лишнего спама в чате и пузырьков.</p>
-        <pre style="background: #000; color: #50fa7b; padding: 10px;">
-# Всегда пиши true в конце эффекта, чтобы скрыть частицы зелий
-effect give @s strength 1 0 true
+</div><!-- /container -->
 
-# Отключи системные сообщения в чате (когда команда срабатывает)
-gamerule commandBlockOutput false
-gamerule sendCommandFeedback false</pre>
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">AERHOLD</div>
+    <div class="footer-meta">KERDYS — Энциклопедия Датапаков v2.0 — 2026</div>
+    <div style="margin-top:8px; font-family:'Share Tech Mono',monospace; font-size:12px; color: #4b5563;">
+      ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ
     </div>
+    <a class="footer-discord" href="https://discord.com">Discord: @0._.observer._.0</a>
+  </div>
+</footer>
 
-    <div style="background: #1a1a1d; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-        <h3>3. Индикатор перезарядки (Actionbar)</h3>
-        <p>Чтобы игрок не гадал "почему магия не работает", выводи время КД прямо над его инвентарем:</p>
-        <pre style="background: #000; color: #50fa7b; padding: 10px;">
-title @a actionbar ["",{"text":"Перезарядка: ","color":"gray"},{"score":{"name":"@s","objective":"cooldown_timer"},"color":"red"}]</pre>
-    </div>
+</div><!-- /page-wrap -->
 
-    <div
+<script>
+// ═══════════════════════════════════════
+// АНИМИРОВАННЫЙ ФОН — Частицы и руны
+// ═══════════════════════════════════════
+const canvas = document.getElementById('canvas-bg');
+const ctx = canvas.getContext('2d');
 
+let W, H;
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
 
-ВСЕ СДЕЛАННО НА ОСНОВЕ ВИКИНГОВ И СКАНДИНАВИИ ПОТОМУ ЧТО АВТОР ЛЮБИТ ЕЁ
-ЕСЛИ ЕСТЬ ЧТО ТО ДОБАВИТЬ ПИСАТЬ В discord : @0._.observer._.0
+const RUNE_CHARS = 'ᚠᚢᚦᚨᚱᚲᚷᚹᚺᚾᛁᛃᛇᛈᛉᛊᛏᛒᛖᛗᛚᛜᛞᛟ';
+
+class Particle {
+  constructor() { this.reset(true); }
+  reset(init = false) {
+    this.x = Math.random() * (W || 1920);
+    this.y = init ? Math.random() * (H || 1080) : (H || 1080) + 20;
+    this.vy = -(0.15 + Math.random() * 0.4);
+    this.vx = (Math.random() - 0.5) * 0.2;
+    this.alpha = 0;
+    this.targetAlpha = 0.04 + Math.random() * 0.1;
+    this.size = 10 + Math.random() * 16;
+    this.char = RUNE_CHARS[Math.floor(Math.random() * RUNE_CHARS.length)];
+    this.color = Math.random() > 0.6
+      ? `rgba(201,168,76,`
+      : Math.random() > 0.5
+        ? `rgba(77,168,218,`
+        : `rgba(126,207,179,`;
+    this.fadeIn = true;
+    this.life = 0;
+    this.maxLife = 200 + Math.random() * 300;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+    if (this.life < 40) {
+      this.alpha = Math.min(this.targetAlpha, this.alpha + this.targetAlpha / 40);
+    } else if (this.life > this.maxLife - 40) {
+      this.alpha = Math.max(0, this.alpha - this.targetAlpha / 40);
+    }
+    if (this.life > this.maxLife || this.y < -30) this.reset();
+  }
+  draw() {
+    ctx.save();
+    ctx.font = `${this.size}px 'Share Tech Mono', monospace`;
+    ctx.fillStyle = this.color + this.alpha + ')';
+    ctx.fillText(this.char, this.x, this.y);
+    ctx.restore();
+  }
+}
+
+// Stars / nodes
+class Star {
+  constructor() {
+    this.x = Math.random() * 1920;
+    this.y = Math.random() * 1080;
+    this.r = 0.5 + Math.random() * 1.2;
+    this.alpha = 0.05 + Math.random() * 0.15;
+    this.pulse = Math.random() * Math.PI * 2;
+    this.speed = 0.003 + Math.random() * 0.01;
+  }
+  update() { this.pulse += this.speed; }
+  draw() {
+    const a = this.alpha * (0.6 + 0.4 * Math.sin(this.pulse));
+    ctx.beginPath();
+    ctx.arc(
+      this.x / 1920 * W,
+      this.y / 1080 * H,
+      this.r, 0, Math.PI * 2
+    );
+    ctx.fillStyle = `rgba(200,210,230,${a})`;
+    ctx.fill();
+  }
+}
+
+const particles = Array.from({length: 35}, () => new Particle());
+const stars = Array.from({length: 120}, () => new Star());
+
+function loop() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Gradient overlay
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, 'rgba(8,10,16,0)');
+  grad.addColorStop(1, 'rgba(10,12,20,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  stars.forEach(s => { s.update(); s.draw(); });
+  particles.forEach(p => { p.update(); p.draw(); });
+
+  requestAnimationFrame(loop);
+}
+loop();
+
+// ═══════════════════════════════════════
+// FADE-IN при скролле
+// ═══════════════════════════════════════
+const fadeEls = document.querySelectorAll('.fade-in');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+}, { threshold: 0.08 });
+fadeEls.forEach(el => io.observe(el));
+
+// ═══════════════════════════════════════
+// КНОПКА НАВЕРХ
+// ═══════════════════════════════════════
+const topBtn = document.getElementById('top-btn');
+window.addEventListener('scroll', () => {
+  topBtn.classList.toggle('show', window.scrollY > 400);
+});
+</script>
+</body>
+</html>
