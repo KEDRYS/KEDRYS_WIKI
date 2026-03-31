@@ -331,42 +331,31 @@
 <body>
 
 <canvas id="canvas-bg"></canvas>
-<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
-<button id="theme-btn" onclick="toggleTheme()" title="Переключить тему">☀</button>
+<button id="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8593; TOP</button>
+<button id="theme-btn" onclick="toggleTheme()" title="Переключить тему">&#9728;</button>
 
 <div class="page-wrap">
 
-<!-- ═══════════ HERO ═══════════ -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-eyebrow">ᚠᚢᚦᚨᚱᚲ — KERDYS — ᚠᚢᚦᚨᚱᚲ</div>
+  <div class="hero-eyebrow">&#5792;&#5794;&#5798;&#5800;&#5802;&#5794; &mdash; KERDYS &mdash; &#5792;&#5794;&#5798;&#5800;&#5802;&#5794;</div>
   <div class="hero-title">KERDYS</div>
   <div class="hero-title-sub">Энциклопедия датапаков</div>
   <p class="hero-desc">Полное техническое руководство по созданию датапаков, модов и миров в Minecraft Java Edition. Проект Aerhold — скандинавская мифология в ванильном Minecraft.</p>
   <div class="hero-buttons">
-    <a href="#sec-basics" class="btn-primary" style="
-        background-color: #add8e6; 
-        color: #1b1b2f; 
-        padding: 15px 35px; 
-        text-decoration: none; 
-        display: inline-block; 
-        font-weight: 800; 
-        text-transform: uppercase; 
-        border-radius: 4px; 
-        box-shadow: 0 0 15px rgba(173, 216, 230, 0.4);
-        font-family: sans-serif;
-">Начать чтение</a>
+    <a href="#sec-basics" class="btn-primary" style="background-color: #add8e6; color: #1b1b2f; padding: 15px 35px; text-decoration: none; display: inline-block; font-weight: 800; text-transform: uppercase; border-radius: 4px; box-shadow: 0 0 15px rgba(173, 216, 230, 0.4); font-family: sans-serif;">Начать чтение</a>
     <a href="#sec-about" class="btn-secondary">Об авторе</a>
   </div>
   <div class="hero-stats">
     <div class="hero-stat"><span class="hero-stat-num">39</span><span class="hero-stat-label">Разделов</span></div>
     <div class="hero-stat"><span class="hero-stat-num">1.21</span><span class="hero-stat-label">Актуальная версия</span></div>
-    <div class="hero-stat"><span class="hero-stat-num">∞</span><span class="hero-stat-label">Строк кода</span></div>
-    <div class="hero-stat"><span class="hero-stat-num">ᛟ</span><span class="hero-stat-label">KEDVYS Project</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">&#8734;</span><span class="hero-stat-label">Строк кода</span></div>
+    <div class="hero-stat"><span class="hero-stat-num">&#5855;</span><span class="hero-stat-label">KEDVYS Project</span></div>
   </div>
-  <div class="hero-scroll-hint">▼ прокрути вниз ▼</div>
+  <div class="hero-scroll-hint">&#9660; прокрути вниз &#9660;</div>
 </section>
 
-<!-- ═══════════ NAV ═══════════ -->
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="#hero" class="nav-brand">KERDYS</a>
@@ -408,12 +397,11 @@
   </div>
 </nav>
 
-<!-- ═══════════ MAIN CONTAINER ═══════════ -->
 <div class="container">
 
   <!-- TOC -->
   <div class="toc-box fade-in">
-    <div class="toc-title">ᛏ Содержание</div>
+    <div class="toc-title">&#5839; Содержание</div>
     <div class="tag-filter-bar">
       <button class="tag-chip active" onclick="filterByTag(this,'all')">Все</button>
       <button class="tag-chip" onclick="filterByTag(this,'1.21')">#1.21</button>
@@ -467,7 +455,7 @@
     </div>
   </div>
 
-  <!-- ════ I — ОСНОВЫ ════ -->
+  <!-- I -->
   <div id="sec-basics" class="chapter-header fade-in" data-tags="basics">
     <span class="chapter-num">Раздел I</span>
     <span class="chapter-title">Основы: Java, версии и pack.mcmeta</span>
@@ -501,7 +489,7 @@
     </div>
   </div>
 
-  <!-- ════ II — СТРУКТУРА ════ -->
+  <!-- II -->
   <div id="sec-structure" class="chapter-header fade-in" data-tags="basics">
     <span class="chapter-num">Раздел II</span>
     <span class="chapter-title">Анатомия и структура датапака</span>
@@ -510,15 +498,15 @@
   <div class="card fade-in">
     <h2>Файловое дерево</h2>
     <pre>my_datapack/
-├── pack.mcmeta          <span class="comment">← обязательный манифест</span>
-├── pack.png             <span class="comment">← иконка 64×64 PNG</span>
+├── pack.mcmeta
+├── pack.png
 └── data/
-    ├── minecraft/       <span class="comment">← переопределение ванили</span>
+    ├── minecraft/
     │   ├── tags/functions/
     │   │   ├── tick.json
     │   │   └── load.json
     │   └── recipes/
-    └── aerhold/         <span class="comment">← твой namespace</span>
+    └── aerhold/
         ├── functions/
         ├── worldgen/
         │   ├── biome/
@@ -532,7 +520,7 @@
         ├── loot_tables/
         ├── predicates/
         ├── damage_type/
-        ├── enchantment/     <span class="comment">← 1.21+</span>
+        ├── enchantment/
         └── structures/</pre>
     <div class="callout callout-warn">
       <div class="callout-label">Namespace</div>
@@ -540,7 +528,7 @@
     </div>
   </div>
 
-  <!-- ════ III — WORLDGEN ════ -->
+  <!-- III -->
   <div id="sec-worldgen" class="chapter-header fade-in" data-tags="worldgen">
     <span class="chapter-num">Раздел III</span>
     <span class="chapter-title">Генерация мира</span>
@@ -556,8 +544,8 @@
     "min_y": -64, "height": 384,
     "size_horizontal": 1, "size_vertical": 2
   },
-  "noise_router": { <span class="comment">/* ... см. раздел IV */</span> },
-  "surface_rule": { <span class="comment">/* ... блоки поверхности */</span> }
+  "noise_router": { },
+  "surface_rule": { }
 }</pre>
   </div>
   <div id="sec-noise" class="card fade-in">
@@ -662,7 +650,7 @@
     </div>
   </div>
 
-  <!-- ════ IV — ФУНКЦИИ ════ -->
+  <!-- IV -->
   <div id="sec-functions" class="chapter-header fade-in" data-tags="functions">
     <span class="chapter-num">Раздел IV</span>
     <span class="chapter-title">Функции, логика и команды</span>
@@ -682,7 +670,7 @@
     </table>
   </div>
   <div class="card card-rune fade-in">
-    <h2>Tick & Load</h2>
+    <h2>Tick &amp; Load</h2>
     <div class="grid-2">
       <div>
         <h3>tick.json — каждый тик</h3>
@@ -697,7 +685,7 @@
     </div>
   </div>
 
-  <!-- ════ V — SCOREBOARD ════ -->
+  <!-- V -->
   <div id="sec-scoreboard" class="chapter-header fade-in" data-tags="functions">
     <span class="chapter-num">Раздел V</span>
     <span class="chapter-title">Scoreboard: переменные и кулдауны</span>
@@ -705,14 +693,13 @@
   </div>
   <div class="card card-gold fade-in">
     <h2>Создание и кулдаун</h2>
-    <pre><span class="comment"># load.mcfunction</span>
+    <pre># load.mcfunction
 scoreboard objectives add cooldown_timer dummy
 scoreboard objectives add mana_points dummy
 
-<span class="comment"># tick.mcfunction — уменьшаем КД</span>
+# tick.mcfunction
 scoreboard players remove @a[scores={cooldown_timer=1..}] cooldown_timer 1
 
-<span class="comment"># Сработать если КД = 0, поставить 100 тиков (5 сек)</span>
 execute as @a[scores={cooldown_timer=0},nbt={SelectedItem:{id:"minecraft:iron_sword"}}] at @s run summon lightning_bolt ~ ~ ~
 execute as @a[scores={cooldown_timer=0},nbt={SelectedItem:{id:"minecraft:iron_sword"}}] run scoreboard players set @s cooldown_timer 100</pre>
     <div class="callout callout-gold">
@@ -730,16 +717,16 @@ execute as @a[scores={cooldown_timer=0},nbt={SelectedItem:{id:"minecraft:iron_sw
       <tr><td>*=</td><td><code>operation @s val *= #const two</code></td><td>Умножить</td></tr>
       <tr><td>/=</td><td><code>operation @s pct /= #const max</code></td><td>Разделить</td></tr>
       <tr><td>%=</td><td><code>operation @s id %= #const ten</code></td><td>Остаток</td></tr>
-      <tr><td>&gt;&lt;</td><td><code>operation @s a >< @s b</code></td><td>Поменять местами</td></tr>
+      <tr><td>&gt;&lt;</td><td><code>operation @s a &gt;&lt; @s b</code></td><td>Поменять местами</td></tr>
     </table>
-    <pre><span class="comment"># Показать КД над инвентарём</span>
+    <pre># Показать КД над инвентарём
 title @a actionbar ["",{"text":"КД: ","color":"gray"},{"score":{"name":"@s","objective":"cooldown_timer"},"color":"red"}]
 
-<span class="comment"># Визуальный кулдаун на предмете (1.21+)</span>
+# Визуальный кулдаун на предмете (1.21+)
 item cooldown @s minecraft:iron_sword 100</pre>
   </div>
 
-  <!-- ════ VI — STORAGE ════ -->
+  <!-- VI -->
   <div id="sec-storage" class="chapter-header fade-in" data-tags="functions">
     <span class="chapter-num">Раздел VI</span>
     <span class="chapter-title">Command Storage: база данных</span>
@@ -751,17 +738,17 @@ item cooldown @s minecraft:iron_sword 100</pre>
       <div><h3>Scoreboard — числа</h3><ul><li>Только целые числа</li><li>Быстрые вычисления</li><li>Таймеры, счётчики, HP</li></ul></div>
       <div><h3>Storage — JSON-объекты</h3><ul><li>Строки, массивы, объекты</li><li>Не исчезает после выхода</li><li>Квесты, инвентарь, RPG</li></ul></div>
     </div>
-    <pre><span class="comment"># Записать данные квеста</span>
+    <pre># Записать данные квеста
 data modify storage aerhold:players CurrentQuest set value {id:"kill_frost_giant",progress:0}
 
-<span class="comment"># Проверить активен ли квест</span>
+# Проверить активен ли квест
 execute if data storage aerhold:players {CurrentQuest:{id:"kill_frost_giant"}} run say Квест активен!
 
-<span class="comment"># Профиль персонажа</span>
+# Профиль персонажа
 data modify storage aerhold:char Profile set value {name:"KERDYS",class:"berserker",kills:0}</pre>
   </div>
 
-  <!-- ════ VII — PREDICATES ════ -->
+  <!-- VII -->
   <div id="sec-predicates" class="chapter-header fade-in" data-tags="functions advanced">
     <span class="chapter-num">Раздел VII</span>
     <span class="chapter-title">Predicates: умные условия</span>
@@ -810,7 +797,7 @@ data modify storage aerhold:char Profile set value {name:"KERDYS",class:"berserk
     <pre>execute as @a at @s if predicate aerhold:is_holding_mjolnir run function aerhold:abilities/thunder_strike</pre>
   </div>
 
-  <!-- ════ VIII — RAYCASTING ════ -->
+  <!-- VIII -->
   <div id="sec-raycasting" class="chapter-header fade-in" data-tags="functions entities">
     <span class="chapter-num">Раздел VIII</span>
     <span class="chapter-title">Raycasting: магические лучи</span>
@@ -818,24 +805,24 @@ data modify storage aerhold:char Profile set value {name:"KERDYS",class:"berserk
   </div>
   <div class="card card-rune fade-in">
     <h2>Алгоритм рекурсивного луча</h2>
-    <pre><span class="comment"># ray/start.mcfunction</span>
+    <pre># ray/start.mcfunction
 summon marker ~ ~1.6 ~ {Tags:["aerhold_ray","new_ray"]}
 execute as @e[tag=new_ray] at @s run function aerhold:ray/travel
 tag @e[tag=new_ray] remove new_ray
 
-<span class="comment"># ray/travel.mcfunction</span>
+# ray/travel.mcfunction
 tp @s ^ ^ ^0.5
 execute as @s at @s if entity @e[type=!player,type=!marker,distance=..1.2] run function aerhold:ray/hit
 execute as @s at @s if block ~ ~ ~ air run function aerhold:ray/travel
 execute as @s at @s unless block ~ ~ ~ air run kill @s
 
-<span class="comment"># ray/hit.mcfunction</span>
+# ray/hit.mcfunction
 damage @e[type=!player,type=!marker,distance=..1.2,limit=1] 8 aerhold:frost
 particle minecraft:snowflake ~ ~ ~ 0.3 0.3 0.3 0.05 30
 kill @s</pre>
   </div>
 
-  <!-- ════ IX — СУЩНОСТИ ════ -->
+  <!-- IX -->
   <div id="sec-entities" class="chapter-header fade-in" data-tags="entities">
     <span class="chapter-num">Раздел IX</span>
     <span class="chapter-title">Item Display и Interaction</span>
@@ -866,7 +853,7 @@ kill @s</pre>
   Tags:["aerhold_mob","hitbox"]
 }
 
-<span class="comment"># Проверка удара</span>
+# Проверка удара
 execute as @e[tag=hitbox]
   if entity @s[nbt={attack:{player:""}}]
   run function aerhold:mob/take_damage</pre>
@@ -874,7 +861,7 @@ execute as @e[tag=hitbox]
     </div>
   </div>
 
-  <!-- ════ X — АНИМАЦИИ ════ -->
+  <!-- X -->
   <div id="sec-animations" class="chapter-header fade-in" data-tags="entities">
     <span class="chapter-num">Раздел X</span>
     <span class="chapter-title">Анимация и кватернионы</span>
@@ -908,7 +895,7 @@ execute as @e[tag=hitbox]
     </div>
   </div>
 
-  <!-- ════ XI — ИИ ════ -->
+  <!-- XI -->
   <div id="sec-ai" class="chapter-header fade-in" data-tags="entities">
     <span class="chapter-num">Раздел XI</span>
     <span class="chapter-title">Продвинутый ИИ мобов</span>
@@ -916,17 +903,17 @@ execute as @e[tag=hitbox]
   </div>
   <div class="card card-gold fade-in">
     <h2>Патрулирование по точкам</h2>
-    <pre><span class="comment"># Маркеры-точки маршрута</span>
+    <pre># Маркеры-точки маршрута
 summon area_effect_cloud 10 64 20 {Tags:["waypoint"],Age:-2147483648,Duration:-1}
 
-<span class="comment"># Охранник идёт к ближайшей точке</span>
+# Охранник идёт к ближайшей точке
 execute as @e[tag=guard] at @s unless entity @p[distance=..15] facing entity @e[tag=waypoint,limit=1,sort=nearest] feet run tp @s ^ ^ ^0.2
 
-<span class="comment"># Атакует при сближении игрока</span>
+# Атакует при сближении игрока
 execute as @e[tag=guard] at @s if entity @p[distance=..15] run function aerhold:ai/guard_alert</pre>
   </div>
 
-  <!-- ════ XII — БОЕВАЯ СИСТЕМА ════ -->
+  <!-- XII -->
   <div id="sec-combat" class="chapter-header fade-in" data-tags="combat">
     <span class="chapter-num">Раздел XII</span>
     <span class="chapter-title">Боевая система: урон и чары</span>
@@ -936,7 +923,7 @@ execute as @e[tag=guard] at @s if entity @p[distance=..15] run function aerhold:
     <h2>Кастомные типы урона <span class="badge badge-1_21">1.20+</span></h2>
     <div class="grid-2">
       <div>
-        <pre><span class="comment">/* damage_type/frost.json */</span>
+        <pre>/* damage_type/frost.json */
 {
   "exhaustion": 0.1,
   "message_id": "frostbite",
@@ -945,19 +932,15 @@ execute as @e[tag=guard] at @s if entity @p[distance=..15] run function aerhold:
 }</pre>
       </div>
       <div>
-        <pre><span class="comment"># Нанести урон</span>
+        <pre># Нанести урон
 damage @s 5 aerhold:frost
-damage @p 8 aerhold:frost by @e[tag=ice_giant,limit=1]
-
-<span class="comment"># lang: смерть от мороза</span>
-<span class="comment"># death.attack.frostbite =</span>
-<span class="comment"># %1$s замёрз в льдах Нифльхейма</span></pre>
+damage @p 8 aerhold:frost by @e[tag=ice_giant,limit=1]</pre>
       </div>
     </div>
   </div>
   <div class="card card-rune fade-in">
     <h2>Кастомные чары 1.21 <span class="badge badge-new">New</span></h2>
-    <pre><span class="comment">/* enchantment/frost_aspect.json */</span>
+    <pre>/* enchantment/frost_aspect.json */
 {
   "description": {"translate": "enchantment.aerhold.frost_aspect"},
   "supported_items": "#minecraft:enchantable/sharpness",
@@ -978,7 +961,7 @@ damage @p 8 aerhold:frost by @e[tag=ice_giant,limit=1]
 }</pre>
   </div>
 
-  <!-- ════ XIII — БОССЫ ════ -->
+  <!-- XIII -->
   <div id="sec-boss" class="chapter-header fade-in" data-tags="combat entities">
     <span class="chapter-num">Раздел XIII</span>
     <span class="chapter-title">Система боссов и фазы боя</span>
@@ -986,23 +969,23 @@ damage @p 8 aerhold:frost by @e[tag=ice_giant,limit=1]
   </div>
   <div class="card card-gold fade-in">
     <h2>Bossbar и фазы</h2>
-    <pre><span class="comment"># Создать полоску</span>
+    <pre># Создать полоску
 bossbar add aerhold:giant "§bЛедяной Великан"
-bossbar set aerhold:giant color blue; bossbar set aerhold:giant max 500
+bossbar set aerhold:giant color blue
+bossbar set aerhold:giant max 500
 
-<span class="comment"># Синхронизировать HP с баром</span>
+# Синхронизировать HP с баром
 execute as @e[tag=giant_boss,limit=1] store result bossbar aerhold:giant value run data get entity @s Health 1
 
-<span class="comment"># Переход на 50% HP</span>
+# Переход на 50% HP
 execute as @e[tag=giant_boss,limit=1] store result score #hp temp run data get entity @s Health 1
 execute if score #hp temp matches ..125 unless score #phase temp matches 2 run function aerhold:boss/phase_2
 
-<span class="comment"># phase_2: смена цвета, призыв волков, эффект силы</span>
 bossbar set aerhold:giant color red
 bossbar set aerhold:giant name "§cЛедяной Великан — Ярость"</pre>
   </div>
 
-  <!-- ════ XIV — LOOT ════ -->
+  <!-- XIV -->
   <div id="sec-loot" class="chapter-header fade-in" data-tags="combat">
     <span class="chapter-num">Раздел XIV</span>
     <span class="chapter-title">Loot Tables: случайные атрибуты</span>
@@ -1031,7 +1014,7 @@ bossbar set aerhold:giant name "§cЛедяной Великан — Ярост�
 }</pre>
   </div>
 
-  <!-- ════ XV — ДАННЫЕ ════ -->
+  <!-- XV -->
   <div id="sec-data" class="chapter-header fade-in" data-tags="functions">
     <span class="chapter-num">Раздел XV</span>
     <span class="chapter-title">Валюта, репутация и экономика</span>
@@ -1039,18 +1022,16 @@ bossbar set aerhold:giant name "§cЛедяной Великан — Ярост�
   </div>
   <div class="card card-rune fade-in">
     <h2>Система базы данных Aerhold</h2>
-    <pre><span class="comment"># load.mcfunction</span>
+    <pre># load.mcfunction
 scoreboard objectives add aerhold.gold dummy "§6Золото"
 scoreboard objectives add aerhold.rep_vikings dummy "Репутация: Викинги"
 scoreboard objectives add aerhold.level dummy "Уровень"
 
-<span class="comment"># Покупка</span>
-execute as @p if score @s aerhold.gold matches 500.. run function aerhold:shop/buy_odin_sword
-<span class="comment"># → scoreboard players remove @s aerhold.gold 500</span>
-<span class="comment"># → give @s ... + title @s actionbar</span></pre>
+# Покупка
+execute as @p if score @s aerhold.gold matches 500.. run function aerhold:shop/buy_odin_sword</pre>
   </div>
 
-  <!-- ════ XVI — АТМОСФЕРА ════ -->
+  <!-- XVI -->
   <div id="sec-atmosphere" class="chapter-header fade-in" data-tags="worldgen">
     <span class="chapter-num">Раздел XVI</span>
     <span class="chapter-title">Атмосфера: частицы и погода</span>
@@ -1058,18 +1039,18 @@ execute as @p if score @s aerhold.gold matches 500.. run function aerhold:shop/b
   </div>
   <div class="card card-gold fade-in">
     <h2>Aurora Borealis и снежные бури</h2>
-    <pre><span class="comment"># Северное сияние — бирюзовые частицы</span>
+    <pre># Северное сияние — бирюзовые частицы
 execute at @a run particle minecraft:dust{r:0.2,g:1.0,b:0.8,scale:2} ^ ^30 ^ 10 2 10 0 100 force
 
-<span class="comment"># Снежная буря — динамическая погода</span>
+# Снежная буря
 execute as @a at @s if predicate aerhold:is_exposed_to_storm run function aerhold:weather/freeze_player
 
-<span class="comment"># freeze_player.mcfunction</span>
+# freeze_player.mcfunction
 effect give @s minecraft:slowness 3 1 true
 data modify entity @s FrozenTicks set value 160</pre>
   </div>
 
-  <!-- ════ XVII — ЗВУКИ ════ -->
+  <!-- XVII -->
   <div id="sec-sounds" class="chapter-header fade-in" data-tags="worldgen">
     <span class="chapter-num">Раздел XVII</span>
     <span class="chapter-title">Звуковой ландшафт</span>
@@ -1092,11 +1073,11 @@ data modify entity @s FrozenTicks set value 160</pre>
   }
 }
 
-<span class="comment"># Вызов</span>
+# Вызов
 playsound aerhold:ambient.arctic_wind ambient @a ~ ~ ~ 1 1</pre>
   </div>
 
-  <!-- ════ XVIII — GUI ════ -->
+  <!-- XVIII -->
   <div id="sec-gui" class="chapter-header fade-in" data-tags="entities">
     <span class="chapter-num">Раздел XVIII</span>
     <span class="chapter-title">Кастомный GUI и Unicode-шрифты</span>
@@ -1113,14 +1094,14 @@ playsound aerhold:ambient.arctic_wind ambient @a ~ ~ ~ 1 1</pre>
   }]
 }
 
-<span class="comment"># Символ \uE001 = кастомная иконка в тайтле</span>
+# Символ \uE001 = кастомная иконка в тайтле
 title @s actionbar {
   "text": "\uE001 Мана: ",
   "extra": [{"score":{"name":"@s","objective":"mana_points"}}]
 }</pre>
   </div>
 
-  <!-- ════ XIX — ПРИВАТ ════ -->
+  <!-- XIX -->
   <div id="sec-protection" class="chapter-header fade-in" data-tags="functions">
     <span class="chapter-num">Раздел XIX</span>
     <span class="chapter-title">Приват зон и защита</span>
@@ -1128,15 +1109,15 @@ title @s actionbar {
   </div>
   <div class="card fade-in">
     <h2>Приват через режим игры</h2>
-    <pre><span class="comment"># Переключать режим по дистанции от центра</span>
+    <pre># Переключать режим по дистанции от центра
 execute as @a[distance=..50,tag=!admin] run gamemode adventure @s
 execute as @a[distance=51..,gamemode=adventure,tag=!admin] run gamemode survival @s
 
-<span class="comment"># Античит: кик за подозрительный урон</span>
+# Античит: кик за подозрительный урон
 execute as @a[tag=!admin] if score @s damage_dealt matches 200.. run function aerhold:security/suspicious</pre>
   </div>
 
-  <!-- ════ XX — JAR ════ -->
+  <!-- XX -->
   <div id="sec-jar" class="chapter-header fade-in" data-tags="jar">
     <span class="chapter-num">Раздел XX</span>
     <span class="chapter-title">Конвертация в JAR / Fabric-мод</span>
@@ -1147,7 +1128,7 @@ execute as @a[tag=!admin] if score @s damage_dealt matches 200.. run function ae
     <pre>src/main/resources/
 ├── fabric.mod.json
 ├── pack.mcmeta
-├── data/          <span class="comment">← весь твой data/</span>
+├── data/
 └── assets/aerhold/
     ├── textures/, models/, sounds/
     └── lang/ru_ru.json</pre>
@@ -1161,17 +1142,16 @@ execute as @a[tag=!admin] if score @s damage_dealt matches 200.. run function ae
   "entrypoints": {"main": []},
   "depends": {"fabricloader":">=0.14.0","minecraft":"~1.21","java":">=21"}
 }</pre>
-    <div id="sec-gradle"></div>
-    <pre><span class="comment">// build.gradle</span>
+    <pre>// build.gradle
 jar {
   from("src/main/resources") {
     include "data/**", "assets/**", "fabric.mod.json", "pack.mcmeta"
   }
 }
-<span class="comment">// ./gradlew build → build/libs/*.jar</span></pre>
+// ./gradlew build — build/libs/*.jar</pre>
   </div>
 
-  <!-- ════ XXI — ОПТИМИЗАЦИЯ ════ -->
+  <!-- XXI -->
   <div id="sec-advanced" class="chapter-header fade-in" data-tags="advanced jar">
     <span class="chapter-num">Раздел XXI</span>
     <span class="chapter-title">Оптимизация и автоматизация</span>
@@ -1186,7 +1166,7 @@ jar {
       <li>Atlas в <code>assets/minecraft/atlases/blocks.json</code> — все текстуры одной картой</li>
       <li>Schedule вместо тик-счётчиков для долгих таймеров</li>
     </ul>
-    <pre><span class="comment"># Python-генератор 500 рецептов</span>
+    <pre># Python-генератор 500 рецептов
 import json, os
 for metal in ["iron","gold","netherite","diamond"]:
     for weapon in ["sword","axe","pickaxe"]:
@@ -1198,7 +1178,7 @@ for metal in ["iron","gold","netherite","diamond"]:
         with open(path,"w") as f: json.dump(recipe,f,indent=2)</pre>
   </div>
 
-  <!-- ════ XXII — МАКРОСЫ ════ -->
+  <!-- XXII -->
   <div id="sec-macros" class="chapter-header fade-in" data-tags="functions 1.21">
     <span class="chapter-num">Раздел XXII</span>
     <span class="chapter-title">Макросы: динамические функции</span>
@@ -1214,7 +1194,7 @@ for metal in ["iron","gold","netherite","diamond"]:
   name: "Меч Одина", color: "gold"
 }
 
-<span class="comment"># give_item.mcfunction</span>
+# give_item.mcfunction
 $give @s $(item)
 $tellraw @s {"text":"$(name)","color":"$(color)"}</pre>
       </div>
@@ -1223,24 +1203,24 @@ $tellraw @s {"text":"$(name)","color":"$(color)"}</pre>
         <pre>data modify storage aerhold:macro TpData set value {x:100,y:64,z:-200}
 function aerhold:teleport with storage aerhold:macro TpData
 
-<span class="comment"># teleport.mcfunction</span>
+# teleport.mcfunction
 $tp @s $(x) $(y) $(z)</pre>
       </div>
     </div>
-    <h3>3. Координаты игрока → телепорт домой</h3>
-    <pre><span class="comment"># Сохраняем позицию</span>
+    <h3>3. Координаты игрока — телепорт домой</h3>
+    <pre># Сохраняем позицию
 execute store result storage aerhold:waypoints HomeFlat.x double 1 run data get entity @s Pos[0]
 execute store result storage aerhold:waypoints HomeFlat.y double 1 run data get entity @s Pos[1]
 execute store result storage aerhold:waypoints HomeFlat.z double 1 run data get entity @s Pos[2]
 
 function aerhold:tp_home with storage aerhold:waypoints HomeFlat
 
-<span class="comment"># tp_home.mcfunction</span>
+# tp_home.mcfunction
 $tp @s $(x) $(y) $(z)
 $title @s actionbar {"text":"⟨ Дом ⟩","color":"aqua"}</pre>
   </div>
 
-  <!-- ════ XXIII — ТЕГИ ════ -->
+  <!-- XXIII -->
   <div id="sec-tags" class="chapter-header fade-in" data-tags="functions 1.21">
     <span class="chapter-num">Раздел XXIII</span>
     <span class="chapter-title">Теги: группировка всего</span>
@@ -1271,17 +1251,17 @@ $title @s actionbar {"text":"⟨ Дом ⟩","color":"aqua"}</pre>
       </div>
       <div>
         <h3>Расширение ванили</h3>
-        <pre><span class="comment">/* minecraft/tags/entity_type/undead.json */</span>
+        <pre>/* minecraft/tags/entity_type/undead.json */
 {
   "replace": false,
   "values": ["aerhold:draugr","aerhold:bone_giant"]
 }
-<span class="comment">/* Smite бьёт их автоматически! */</span></pre>
+/* Smite бьёт их автоматически! */</pre>
       </div>
     </div>
   </div>
 
-  <!-- ════ XXIV — ADVANCEMENTS ════ -->
+  <!-- XXIV -->
   <div id="sec-advancements" class="chapter-header fade-in" data-tags="advanced functions">
     <span class="chapter-num">Раздел XXIV</span>
     <span class="chapter-title">Advancements: детекторы событий</span>
@@ -1300,7 +1280,7 @@ $title @s actionbar {"text":"⟨ Дом ⟩","color":"aqua"}</pre>
       <tr><td><code>changed_dimension</code></td><td>Смена измерения</td></tr>
       <tr><td><code>tick</code></td><td>Каждый тик (один раз)</td></tr>
     </table>
-    <pre><span class="comment">/* Детектор подбора Мьёльнира */</span>
+    <pre>/* Детектор подбора Мьёльнира */
 {
   "criteria": {"got_mjolnir": {
     "trigger": "minecraft:inventory_changed",
@@ -1311,7 +1291,7 @@ $title @s actionbar {"text":"⟨ Дом ⟩","color":"aqua"}</pre>
   "display": {"hidden": true, "title": "", "description": ""}
 }
 
-<span class="comment"># on_mjolnir_found.mcfunction</span>
+# on_mjolnir_found.mcfunction
 advancement revoke @s only aerhold:detect_mjolnir_pickup
 tag @s add has_mjolnir
 title @s title {"text":"⟨ МЬЁЛЬНИР ⟩","color":"gold","bold":true}</pre>
@@ -1321,7 +1301,7 @@ title @s title {"text":"⟨ МЬЁЛЬНИР ⟩","color":"gold","bold":true}</p
     </div>
   </div>
 
-  <!-- ════ XXV — PREDICATES DEEP ════ -->
+  <!-- XXV -->
   <div id="sec-predicates-deep" class="chapter-header fade-in" data-tags="advanced functions">
     <span class="chapter-num">Раздел XXV</span>
     <span class="chapter-title">Predicates: полный справочник</span>
@@ -1356,7 +1336,7 @@ title @s title {"text":"⟨ МЬЁЛЬНИР ⟩","color":"gold","bold":true}</p
 }</pre>
   </div>
 
-  <!-- ════ XXVI — ЧАРЫ DEEP ════ -->
+  <!-- XXVI -->
   <div id="sec-enchants-deep" class="chapter-header fade-in" data-tags="combat 1.21">
     <span class="chapter-num">Раздел XXVI</span>
     <span class="chapter-title">Кастомные чары 1.21+: полный гайд</span>
@@ -1376,7 +1356,7 @@ title @s title {"text":"⟨ МЬЁЛЬНИР ⟩","color":"gold","bold":true}</p
   </div>
   <div class="card card-gold fade-in">
     <h2>Вампиризм <span class="badge badge-new">Ultra Rare</span></h2>
-    <pre><span class="comment">/* enchantment/vampirism.json */</span>
+    <pre>/* enchantment/vampirism.json */
 {
   "description": {"translate":"enchantment.aerhold.vampirism","color":"dark_red"},
   "supported_items": "#minecraft:enchantable/weapon",
@@ -1399,7 +1379,7 @@ title @s title {"text":"⟨ МЬЁЛЬНИР ⟩","color":"gold","bold":true}</p
 }</pre>
   </div>
 
-  <!-- ════ XXVII — РЕЦЕПТЫ ════ -->
+  <!-- XXVII -->
   <div id="sec-recipes" class="chapter-header fade-in" data-tags="1.21 functions">
     <span class="chapter-num">Раздел XXVII</span>
     <span class="chapter-title">Рецепты: все типы крафта</span>
@@ -1455,7 +1435,7 @@ title @s title {"text":"⟨ МЬЁЛЬНИР ⟩","color":"gold","bold":true}</p
     </div>
   </div>
 
-  <!-- ════ XXVIII — КОМПОНЕНТЫ ════ -->
+  <!-- XXVIII -->
   <div id="sec-components" class="chapter-header fade-in" data-tags="1.21">
     <span class="chapter-num">Раздел XXVIII</span>
     <span class="chapter-title">Item Components 1.21+</span>
@@ -1497,7 +1477,7 @@ title @s title {"text":"⟨ МЬЁЛЬНИР ⟩","color":"gold","bold":true}</p
     </table>
   </div>
 
-  <!-- ════ XXIX — NBT ════ -->
+  <!-- XXIX -->
   <div id="sec-nbt" class="chapter-header fade-in" data-tags="advanced functions">
     <span class="chapter-num">Раздел XXIX</span>
     <span class="chapter-title">NBT: типы данных и пути</span>
@@ -1515,24 +1495,24 @@ title @s title {"text":"⟨ МЬЁЛЬНИР ⟩","color":"gold","bold":true}</p
       <tr><td><code>d</code></td><td>Double</td><td><code>X:100.5d</code></td></tr>
     </table>
     <h3>Пути и операции</h3>
-    <pre><span class="comment"># Читать / писать</span>
+    <pre># Читать / писать
 data get entity @s Health
 data get entity @s Pos[0]
 data get entity @s Inventory[{Slot:0b}].tag
 
-<span class="comment"># Scoreboard ↔ NBT</span>
+# Scoreboard ↔ NBT
 execute store result entity @s Health float 1 run scoreboard players get @s hp_score
 
-<span class="comment"># Копировать между сущностями</span>
+# Копировать между сущностями
 data modify storage aerhold:tmp Pos set from entity @e[tag=source,limit=1] Pos
 data modify entity @e[tag=target,limit=1] Pos set from storage aerhold:tmp Pos
 
-<span class="comment"># Добавить в список / удалить</span>
+# Добавить в список / удалить
 data modify entity @s Tags append value "new_tag"
 data remove entity @s custom.old_data</pre>
   </div>
 
-  <!-- ════ XXX — TEXT COMPONENTS ════ -->
+  <!-- XXX -->
   <div id="sec-text" class="chapter-header fade-in" data-tags="advanced functions">
     <span class="chapter-num">Раздел XXX</span>
     <span class="chapter-title">Text Components: JSON-текст</span>
@@ -1567,7 +1547,7 @@ data remove entity @s custom.old_data</pre>
 }</pre>
   </div>
 
-  <!-- ════ XXXI — FEATURES ════ -->
+  <!-- XXXI -->
   <div id="sec-features" class="chapter-header fade-in" data-tags="worldgen">
     <span class="chapter-num">Раздел XXXI</span>
     <span class="chapter-title">Placed Features: руды и деревья</span>
@@ -1609,7 +1589,7 @@ data remove entity @s custom.old_data</pre>
     </div>
   </div>
 
-  <!-- ════ XXXII — СПАВН ════ -->
+  <!-- XXXII -->
   <div id="sec-spawn" class="chapter-header fade-in" data-tags="entities worldgen">
     <span class="chapter-num">Раздел XXXII</span>
     <span class="chapter-title">Спавн мобов: Spawn Rules</span>
@@ -1617,7 +1597,7 @@ data remove entity @s custom.old_data</pre>
   </div>
   <div class="card card-rune fade-in">
     <h2>Биомные правила и контролируемый спавн</h2>
-    <pre><span class="comment">/* aerhold/worldgen/biome/frozen_wastelands.json */</span>
+    <pre>/* aerhold/worldgen/biome/frozen_wastelands.json */
 {
   "spawners": {
     "monster": [
@@ -1627,15 +1607,15 @@ data remove entity @s custom.old_data</pre>
   }
 }
 
-<span class="comment"># Лимит врагов через scoreboard</span>
+# Лимит врагов через scoreboard
 execute store result score #enemy_count temp run execute if entity @e[tag=aerhold_enemy]
 execute if score #enemy_count temp matches ..19 run function aerhold:spawn/random_enemy
 
-<span class="comment"># Удалять дальних врагов (оптимизация)</span>
+# Удалять дальних врагов (оптимизация)
 execute as @e[tag=aerhold_enemy,distance=200..] run kill @s</pre>
   </div>
 
-  <!-- ════ XXXIII — SCHEDULE ════ -->
+  <!-- XXXIII -->
   <div id="sec-schedule" class="chapter-header fade-in" data-tags="functions">
     <span class="chapter-num">Раздел XXXIII</span>
     <span class="chapter-title">Schedule: отложенные функции</span>
@@ -1650,19 +1630,17 @@ execute as @e[tag=aerhold_enemy,distance=200..] run kill @s</pre>
       <tr><td><code>schedule function f:n 1s</code></td><td>Через 1 секунду</td></tr>
       <tr><td><code>schedule clear f:n</code></td><td>Отменить</td></tr>
     </table>
-    <pre><span class="comment"># Ритуал призыва — цепочка событий</span>
+    <pre># Ритуал призыва — цепочка событий
 particle minecraft:soul_fire_flame ~ ~1 ~ 1 1 1 0.05 50
 playsound minecraft:block.respawn_anchor.charge ambient @a ~ ~ ~ 2 0.5
-schedule function aerhold:ritual/step_2 40t
-<span class="comment"># step_2: дракон + тайтл + schedule step_3 60t</span>
-<span class="comment"># step_3: summon aerhold:ice_giant</span></pre>
+schedule function aerhold:ritual/step_2 40t</pre>
     <div class="callout callout-warn">
       <div class="callout-label">append vs replace</div>
-      <code>replace</code> (дефолт) — новый вызов заменяет старый. <code>append</code> — несколько независимых экземпляров (нужно для нескольких ритуалов одновременно).
+      <code>replace</code> (дефолт) — новый вызов заменяет старый. <code>append</code> — несколько независимых экземпляров.
     </div>
   </div>
 
-  <!-- ════ XXXIV — EXTRA ════ -->
+  <!-- XXXIV -->
   <div id="sec-extra" class="chapter-header fade-in" data-tags="worldgen jar 1.21">
     <span class="chapter-num">Раздел XXXIV</span>
     <span class="chapter-title">Trim Materials, Jigsaw, Wolf Variants</span>
@@ -1690,13 +1668,6 @@ schedule function aerhold:ritual/step_2 40t
   "tame_texture": "aerhold:entity/wolf/arctic_tame",
   "angry_texture": "aerhold:entity/wolf/arctic_angry",
   "biomes": "#aerhold:is_frozen"
-}
-
-<span class="comment">/* Painting Variant */</span>
-{
-  "asset_id": "aerhold:valhalla",
-  "width": 4, "height": 3,
-  "author": {"text": "KERDYS"}
 }</pre>
       </div>
     </div>
@@ -1710,7 +1681,7 @@ schedule function aerhold:ritual/step_2 40t
 }</pre>
   </div>
 
-  <!-- ════ XXXV — ОБ АВТОРЕ ════ -->
+  <!-- XXXV -->
   <div id="sec-about" class="chapter-header fade-in">
     <span class="chapter-num">Раздел XXXV</span>
     <span class="chapter-title">Об авторе</span>
@@ -1753,9 +1724,8 @@ schedule function aerhold:ritual/step_2 40t
     </div>
   </div>
 
-</div><!-- /container -->
+</div>
 
-<!-- ═══════════ FOOTER ═══════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">AERHOLD</div>
@@ -1771,7 +1741,7 @@ schedule function aerhold:ritual/step_2 40t
   </div>
 </footer>
 
-</div><!-- /page-wrap -->
+</div>
 
 <script>
 // ═══ CANVAS ═══
@@ -1848,9 +1818,9 @@ function toggleTheme(){
   }
 })();
 
-// ═══ ФИЛЬТР ═══
+// ═══ ФИЛЬТР (ИСПРАВЛЕН) ═══
 const tagMap = {
-  'worldgen':  ['sec-worldgen','sec-noise','sec-splines','sec-dimensions','sec-biomes','sec-features','sec-spawn','sec-atmosphere','sec-sounds'],
+  'worldgen':  ['sec-worldgen','sec-dimensions','sec-biomes','sec-features','sec-spawn','sec-atmosphere','sec-sounds'],
   'functions': ['sec-functions','sec-scoreboard','sec-storage','sec-predicates','sec-raycasting','sec-schedule','sec-macros','sec-data','sec-protection','sec-gui'],
   'entities':  ['sec-entities','sec-animations','sec-ai','sec-boss','sec-spawn','sec-gui'],
   'combat':    ['sec-combat','sec-boss','sec-loot','sec-enchants-deep'],
@@ -1858,13 +1828,35 @@ const tagMap = {
   'advanced':  ['sec-advanced','sec-nbt','sec-text','sec-predicates-deep','sec-advancements'],
   'jar':       ['sec-jar','sec-extra'],
 };
-function filterByTag(btn, tag){
-  document.querySelectorAll('.tag-chip').forEach(c=>c.classList.remove('active'));
+
+function filterByTag(btn, tag) {
+  document.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
   const headers = document.querySelectorAll('.chapter-header');
-  if(tag==='all'){ headers.forEach(h=>h.classList.remove('hidden')); return; }
-  const ids = tagMap[tag]||[];
-  headers.forEach(h=>{ h.classList.toggle('hidden', !ids.includes(h.id)); });
+
+  if (tag === 'all') {
+    headers.forEach(h => {
+      h.classList.remove('hidden');
+      let next = h.nextElementSibling;
+      while (next && !next.classList.contains('chapter-header')) {
+        next.style.display = '';
+        next = next.nextElementSibling;
+      }
+    });
+    return;
+  }
+
+  const ids = tagMap[tag] || [];
+  headers.forEach(h => {
+    const hide = !ids.includes(h.id);
+    h.classList.toggle('hidden', hide);
+    // Скрываем все карточки после заголовка до следующего заголовка
+    let next = h.nextElementSibling;
+    while (next && !next.classList.contains('chapter-header')) {
+      next.style.display = hide ? 'none' : '';
+      next = next.nextElementSibling;
+    }
+  });
 }
 
 // ═══ КНОПКА НАВЕРХ ═══
