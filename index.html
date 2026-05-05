@@ -393,6 +393,11 @@
     <a href="#sec-spawn">Спавн</a>
     <a href="#sec-schedule">Schedule</a>
     <a href="#sec-extra">Trim/Jigsaw</a>
+    <a href="#sec-debug">Отладчик</a>
+    <a href="#sec-math">Математика</a>
+    <a href="#sec-ai-copilot">Это РОФЛС</a>
+    <a href="#sec-stress">Стресс-тест</a>
+    <a href="#sec-resourcepack">ResourePack</a>
     <a href="#sec-about">Об авторе</a>
   </div>
 </nav>
@@ -451,6 +456,11 @@
       <a class="toc-link" href="#sec-spawn"><span class="toc-num">XXXVI</span> Спавн мобов</a>
       <a class="toc-link" href="#sec-schedule"><span class="toc-num">XXXVII</span> Schedule</a>
       <a class="toc-link" href="#sec-extra"><span class="toc-num">XXXVIII</span> Trim, Jigsaw, Wolf</a>
+      <a class="toc-link" href="#sec-debug"><span class="toc-num">XL</span> Визуальный отладчик</a>
+      <a class="toc-link" href="#sec-math"><span class="toc-num">XLI</span> Математика для не-математиков</a>
+      <a class="toc-link" href="#sec-ai-copilot"><span class="toc-num">XLII</span> РОФЛС!</a>
+      <a class="toc-link" href="#sec-stress"><span class="toc-num">XLIII</span> Оптимизация для серверов</a>
+      <a class="toc-link" href="#sec-resourcepack"><span class="toc-num">XLIV</span> Resource Packs + датапак</a>
       <a class="toc-link" href="#sec-about"><span class="toc-num">XXXIX</span> Об авторе</a>
     </div>
   </div>
@@ -1681,6 +1691,157 @@ schedule function aerhold:ritual/step_2 40t</pre>
 }</pre>
   </div>
 
+  <!-- XXXV — ОТЛАДЧИК -->
+  <div id="sec-debug" class="chapter-header fade-in" data-tags="functions advanced">
+    <span class="chapter-num">Раздел XXXV</span>
+    <span class="chapter-title">Визуальный отладчик</span>
+    <span class="chapter-line"></span>
+  </div>
+  <div class="card card-rune fade-in">
+    <h2>Проблема: датапак молчит</h2>
+    <p>В отличие от Java, mcfunction не кидает стектрейс. Код просто не работает — и ты не знаешь почему. Решение — сделать невидимое видимым.</p>
+    <div class="callout callout-warn">
+      <div class="callout-label">Правило отладки</div>
+      Никогда не угадывай. Визуализируй. Каждая переменная, каждый вектор — должны быть видны в игре.
+    </div>
+  </div>
+  <div class="card card-gold fade-in">
+    <h2>Debug HUD: переменные в реальном времени</h2>
+    <p>Выводи всё важное в <code>actionbar</code> — он обновляется каждый тик и не спамит чат.</p>
+    <pre># debug/hud.mcfunction — запускай из tick только когда нужно
+title @a[tag=dev] actionbar [
+  {"text":"HP:","color":"gray"},
+  {"score":{"name":"@s","objective":"hp_score"},"color":"red"},
+  {"text":"  МАНА:","color":"gray"},
+  {"score":{"name":"@s","objective":"mana_points"},"color":"aqua"},
+  {"text":"  ФАЗА:","color":"gray"},
+  {"score":{"name":"#boss_phase","objective":"temp"},"color":"gold"},
+  {"text":"  КД:","color":"gray"},
+  {"score":{"name":"@s","objective":"cooldown_timer"},"color":"yellow"}
+]
+
+# Включить/выключить дебаг-режим
+tag @p[tag=dev] remove dev
+tag @p[tag=!dev] add dev</pre>
+    <div class="callout callout-tip">
+      <div class="callout-label">Совет</div>
+      Добавь тег <code>dev</code> только себе. HUD будет виден только тебе, не игрокам.
+    </div>
+  </div>
+  <div class="card fade-in">
+    <h2>Отрисовка векторов частицами</h2>
+    <p>Рисуй линии чтобы видеть куда летит рейкаст, где находится хитбокс, в каком направлении смотрит сущность.</p>
+    <pre># Нарисовать луч от игрока — цепочка частиц по вектору взгляда
+# draw_ray.mcfunction
+execute at @p anchored eyes facing entity @p feet run function aerhold:debug/ray_step
+
+# ray_step.mcfunction — рекурсивно идёт вперёд 20 шагов
+scoreboard players remove #ray_steps debug 1
+particle minecraft:flame ^ ^ ^0.3 0 0 0 0 1 force
+execute if score #ray_steps debug matches 1.. run tp @s ^ ^ ^0.3
+execute if score #ray_steps debug matches 1.. run function aerhold:debug/ray_step
+
+# Запуск: установить счётчик и вызвать
+scoreboard players set #ray_steps debug 20
+execute at @p run function aerhold:debug/draw_ray</pre>
+    <pre># Отрисовка хитбокса сущности (4 угла AABB)
+execute as @e[tag=aerhold_mob] at @s run particle minecraft:electric_spark ~-0.75 ~0 ~-0.75 0 0 0 0 1 force
+execute as @e[tag=aerhold_mob] at @s run particle minecraft:electric_spark ~0.75 ~0 ~-0.75 0 0 0 0 1 force
+execute as @e[tag=aerhold_mob] at @s run particle minecraft:electric_spark ~-0.75 ~0 ~0.75 0 0 0 0 1 force
+execute as @e[tag=aerhold_mob] at @s run particle minecraft:electric_spark ~0.75 ~0 ~0.75 0 0 0 0 1 force
+execute as @e[tag=aerhold_mob] at @s run particle minecraft:electric_spark ~ ~1.5 ~ 0 0 0 0 1 force</pre>
+  </div>
+  <div class="card card-rune fade-in">
+    <h2>Чеклист: что проверить когда ничего не работает</h2>
+    <table class="data-table">
+      <tr><th>Симптом</th><th>Причина</th><th>Проверь</th></tr>
+      <tr><td>Функция не вызывается</td><td>Namespace или путь</td><td><code>/function aerhold:имя</code> вручную</td></tr>
+      <tr><td>execute молчит</td><td>Нет подходящих сущностей</td><td>Замени <code>@e[...]</code> на <code>@e</code> и сужай</td></tr>
+      <tr><td>Скорборд не меняется</td><td>Objective не создан</td><td><code>/scoreboard objectives list</code></td></tr>
+      <tr><td>NBT не читается</td><td>Путь неверен</td><td><code>/data get entity @p</code> и смотри структуру</td></tr>
+      <tr><td>Предикат не срабатывает</td><td>JSON-ошибка внутри</td><td>Вставь в <a href="https://misode.github.io" target="_blank">misode.github.io</a> — валидатор</td></tr>
+      <tr><td>Рецепт не появляется</td><td>pack_format не совпадает</td><td>Сверь с таблицей Раздел I</td></tr>
+    </table>
+  </div>
+
+  <!-- XXXVI  — МАТЕМАТИКА -->
+  <div id="sec-math" class="chapter-header fade-in" data-tags="entities advanced">
+    <span class="chapter-num">Раздел XXXVI </span>
+    <span class="chapter-title">Математика для не-математиков</span>
+    <span class="chapter-line"></span>
+  </div>
+  <div class="card card-gold fade-in">
+    <h2>Кватернионы: шпаргалка без боли</h2>
+    <p>Кватернион <code>[x, y, z, w]</code> — это просто «ось поворота + угол». Запомни три случая и больше ничего не нужно.</p>
+    <table class="data-table">
+      <tr><th>Угол</th><th>Ось X (наклон)</th><th>Ось Y (поворот)</th><th>Ось Z (крен)</th></tr>
+      <tr><td>0°</td><td>[0, 0, 0, 1]</td><td>[0, 0, 0, 1]</td><td>[0, 0, 0, 1]</td></tr>
+      <tr><td>45°</td><td>[0.383, 0, 0, 0.924]</td><td>[0, 0.383, 0, 0.924]</td><td>[0, 0, 0.383, 0.924]</td></tr>
+      <tr><td>90°</td><td>[0.707, 0, 0, 0.707]</td><td>[0, 0.707, 0, 0.707]</td><td>[0, 0, 0.707, 0.707]</td></tr>
+      <tr><td>135°</td><td>[0.924, 0, 0, 0.383]</td><td>[0, 0.924, 0, 0.383]</td><td>[0, 0, 0.924, 0.383]</td></tr>
+      <tr><td>180°</td><td>[1, 0, 0, 0]</td><td>[0, 1, 0, 0]</td><td>[0, 0, 1, 0]</td></tr>
+      <tr><td>-90°</td><td>[-0.707, 0, 0, 0.707]</td><td>[0, -0.707, 0, 0.707]</td><td>[0, 0, -0.707, 0.707]</td></tr>
+    </table>
+    <div class="callout callout-gold">
+      <div class="callout-label">Формула</div>
+      Для угла θ по оси Y: <code>[0, sin(θ/2), 0, cos(θ/2)]</code>. Калькулятор: sin(22.5°) = 0.383, sin(45°) = 0.707, sin(67.5°) = 0.924.
+    </div>
+  </div>
+  <div class="card card-rune fade-in">
+    <h2>Круговое движение: аура вокруг босса</h2>
+    <p>Синус и косинус дают круг. Меняй угол каждый тик — получаешь вращение.</p>
+    <pre># Аура из 8 частиц вокруг босса
+# Угол хранится в скорборде, увеличивается на 9° каждый тик (= полный оборот за 40 тиков)
+
+scoreboard players add #aura_angle aura_timer 9
+execute if score #aura_angle aura_timer matches 360.. run scoreboard players set #aura_angle aura_timer 0
+
+# Макрос: вычисляем координаты через storage
+# aura/calc.mcfunction — вызывается с аргументом {angle: N}
+$execute at @e[tag=boss_center,limit=1] run particle minecraft:soul_fire_flame   ~$(cos_x) ~1 ~$(sin_z) 0 0 0 0 1 force</pre>
+    <div class="callout callout-tip">
+      <div class="callout-label">Готовая библиотека</div>
+      Для настоящего синуса/косинуса в датапаках используй <strong>scoreboards как lookup-таблицу</strong> (360 предварительно вычисленных значений) или Fabric-мод <code>math</code>.
+    </div>
+    <h3>Пульсирующий масштаб: дыхание босса</h3>
+    <pre># scale = 1.0 + 0.2 * sin(tick * 0.1)
+# Имитируем через интерполяцию туда-обратно
+
+# В load: установить direction
+scoreboard players set #pulse_dir pulse 1
+
+# В tick:
+execute if score #pulse_dir pulse matches 1 run scoreboard players add #pulse pulse 1
+execute if score #pulse_dir pulse matches -1 run scoreboard players remove #pulse pulse 1
+execute if score #pulse pulse matches 20.. run scoreboard players set #pulse_dir pulse -1
+execute if score #pulse pulse matches 0 run scoreboard players set #pulse_dir pulse 1
+
+# Маппинг 0-20 → scale 1.0-1.3 через макрос
+function aerhold:boss/apply_pulse with storage aerhold:math PulseData</pre>
+  </div>
+  <div class="card fade-in">
+    <h2>Вращающийся щит: кольцо Item Display</h2>
+    <pre># Спавним 6 щитов по кругу вокруг босса
+# Каждый получает свой starting_angle через тег
+
+summon item_display ~ ~1 ~ {Tags:["shield_0"],transformation:{translation:[2f,0f,0f],scale:[0.8f,0.8f,0.8f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f]},item:{id:"minecraft:shield",Count:1b}}
+summon item_display ~ ~1 ~ {Tags:["shield_1"],transformation:{translation:[1f,0f,1.732f],scale:[0.8f,0.8f,0.8f],left_rotation:[0f,0f,0f,1f],right_rotation:[0f,0f,0f,1f]},item:{id:"minecraft:shield",Count:1b}}
+
+# Каждый тик: вращать left_rotation по Y
+data merge entity @e[tag=shield_0,limit=1] {
+  start_interpolation:0, interpolation_duration:20,
+  transformation:{left_rotation:[0f,0.707f,0f,0.707f],right_rotation:[0f,0f,0f,1f],translation:[2f,0f,0f],scale:[0.8f,0.8f,0.8f]}
+}</pre>
+  </div>
+
+  <!-- XXXVII — От автора --> тут всякое как заметки 
+  <div id="sec-ai-copilot" class="chapter-header fade-in" data-tags="advanced">
+    <span class="chapter-num">Раздел XXXVII</span>
+      <div class="card fade-in">
+    <h2>просто типа: это РОФЛС 1.21302-498</h2>
+    <p>Бро надо тренироваться!.</p>
+    <table class="data-table"> вотч демо
+
   <!-- XXXV -->
   <div id="sec-about" class="chapter-header fade-in">
     <span class="chapter-num">Раздел XXXV</span>
@@ -1822,11 +1983,11 @@ function toggleTheme(){
 const tagMap = {
   'worldgen':  ['sec-worldgen','sec-dimensions','sec-biomes','sec-features','sec-spawn','sec-atmosphere','sec-sounds'],
   'functions': ['sec-functions','sec-scoreboard','sec-storage','sec-predicates','sec-raycasting','sec-schedule','sec-macros','sec-data','sec-protection','sec-gui'],
-  'entities':  ['sec-entities','sec-animations','sec-ai','sec-boss','sec-spawn','sec-gui'],
+  'entities':  ['sec-entities','sec-animations','sec-ai','sec-boss','sec-spawn','sec-gui','sec-math'],
   'combat':    ['sec-combat','sec-boss','sec-loot','sec-enchants-deep'],
   '1.21':      ['sec-components','sec-enchants-deep','sec-recipes','sec-macros','sec-tags'],
-  'advanced':  ['sec-advanced','sec-nbt','sec-text','sec-predicates-deep','sec-advancements'],
-  'jar':       ['sec-jar','sec-extra'],
+  'advanced':  ['sec-advanced','sec-nbt','sec-text','sec-predicates-deep','sec-advancements','sec-debug','sec-math','sec-ai-copilot','sec-stress'],
+  'jar':       ['sec-jar','sec-extra','sec-resourcepack'],
 };
 
 function filterByTag(btn, tag) {
@@ -1852,7 +2013,7 @@ function filterByTag(btn, tag) {
     h.classList.toggle('hidden', hide);
     // Скрываем все карточки после заголовка до следующего заголовка
     let next = h.nextElementSibling;
-    while (next && !next.classList.contains('chapter-header')) {
+    while (next && !next.classList.contains('chapter-header')) {Е
       next.style.display = hide ? 'none' : '';
       next = next.nextElementSibling;
     }
